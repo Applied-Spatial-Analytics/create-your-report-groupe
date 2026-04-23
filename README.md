@@ -31,6 +31,6 @@ pull request to ask questions about the feedback.
 ### Asking for help
 
 If you have questions about the assignment, please ask them in
-[Discussions](https://github.com/sdgis-edu-tud/asa2025/discussions).
+[Discussions](https://github.com/Applied-Spatial-Analytics/asa2026/discussions).
 
 

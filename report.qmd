@@ -2,16 +2,14 @@
 title: "Title of your report"
 subtitle: "Project report of Group #"
 author:
-  - name: "Student 1"
+  - name: "Roxanne"
+    affiliation: "MSc Urbanism"
+  - name: "Belina Aileen"
     affiliation: "MSc Geomatics"
-  - name: "Student 2"
-    affiliation: "MSc Landscape Architecture"
-  - name: "Student 3"
-    affiliation: "MSc Urbanism"
-  - name: "Student 4"
-    affiliation: "MSc Urbanism"
-  - name: "Student 5"
-    affiliation: "MSc Landscape Architecture"
+  - name: "Daman Dogra"
+    affiliation: "MSc Geomatics"
+  - name: "Arda Baysal"
+    affiliation: "MSc Geomatics"
 format: html
 ---
 

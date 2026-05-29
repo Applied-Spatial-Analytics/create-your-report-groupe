@@ -1,5 +1,5 @@
 ---
-title: "Title of your report"
+title: "Spatial Justice through Urban Green Space Connectivity"
 subtitle: "Project report of Group E"
 author:
   - name: "Roxanne"
@@ -10,8 +10,115 @@ author:
     affiliation: "MSc Geomatics"
 format: html
 ---
-test
-## Running Code
+# Introduction
+
+## Introduction
+### Background
+### Problem statement
+### Research aim
+
+## Research Questions
+### Research objectives
+### Research questions
+### Report structure
+
+Define 
+- Urban Green Space
+- connectivity & biodiversity
+- spatial justice
+
+Context/problem statement:
+
+Within the field of urbanism and urban planning the topic of spatial justice is increasingly discussed. (source 1). However, spatial justice is not a measurable unit and therefore research focuses on breaking it up into componants that are measurable, in order to quantify or qualify and contextualise spatial justice in a defined location. 
+
+Having access to green spaces influences the wellbeing of citizens tremendously. Green spaces provide shade, cooling, better air quality, space for leisure, etc. - add later. Unfortunately, not everyone has equal access to these green spaces. Due to rapid urbanisation, the pressure on urban green space increases and the benefits are often unevenly distributed across neighbourhoods. Spatial justice in relationship to green space access seeks to understand wether environmental benefits are distributed equitably among residents. When we look at urban green space, spatial justice is not only determined by the quality of green space, but by how well green spaces are connected, accessible, and ecologically functional. This then determines how equitably ecological benefits are distributed across a city or a district.
+Traditional urban plans often focus on quanitity or proximity alone (source 2). Municipalities and planners are looking for ways to improve not only the amount, but also the quality of these urban green spaces. Understanding how accessibility identify opportunities to improve spatial justice. 
+
+Urban green spaces are still unequally distributed across different city districts. This depends not only on factors such as accessibility and proximity, but also neighbourhood profile differences, such as density and income. Residents may live close to green areas, but have limited access due to fragmentation or poor connectivity (source3). 
+Having optimal connectivity between urban green spaces increase this quality; it becomes more accessible for humans as well as non-humans, providing better habitat and improving the ecological value of urban green spaces. Connected green networks improve ecological functioning by facilitating movement of species and strenghtens the ecosystem resilience. The amount of biodiversity thus plays a role in determining the quality of the UGS. 
+
+- is there a gap in studies/existing assessments that combine accessibility, biodiversity, and connectivity into a single framework??
+
+In order to assess wether a city (district) is succesfull, and where it can improve its UGS, this study provides a method that combines factors such as proximity, biodiversity and connectivity into a single framework that assesses spatial justice. There is a need for a reproducible method that evaluates urban green space quality in relation to spatial justice across different urban contexts. 
+
+research aim:
+The aim of the research is to develop a spatial analytical tool for evaluating urban green space quality by investigating the relationship between accessibility, connectivity, biodiversity, and ultimately, spatial justice. This relationship is compared in two contratsting urban contexts: Delft (The Netherlands) and Guangzhou (China). The framework identifies areas where interventions can improve urban green space quality and translates findings into planning recommendations for increasing this quality.
+
+research question:
+
+How does connectivity between & biodiversity in urban green spaces contribute 
+to spatial justice in the cities Delft and Guangzhou?
+
+new proposal:
+How does quality and connectivity of urban green spaces contribute to spatial justice in Delft and Guangzhou?
+
+research objectives/subquestions:
+
+1. Quantify the spatial distribution and accessibility of urban green spaces.
+SQ1: How accessible are green spaces for residents?
+
+2.     Evaluate connectivity between different urban green spaces. 
+SQ2: What are the different typologies of urban green spaces and their access?
+
+3.     Assess spatial justice through the relationship between population and access to green space. 
+SQ3: How equitable are green spaces distributed across administrative units in relation to population demographics?
+
+4.     Compare how strong these relationships are in different cities (Delft vs Guangzhou).
+SQ4: How does urban green space relate to spatial justice in Delft compared to Guangzhou?
+
+5.     Translate analytical findings into strategies for increasing UGS quality.
+SQ5: How do the differences between the two cities show how connectivity and accessibility can improve spatial justice? What strategies  are 
+suggested to improve spatial justice?
+
+brief overview of approach/ structure:
+This study addresses the research question by breaking it up in several research subquestions, which will come together in forming a MCDA, with which this study provides a method to determine the quality of urban green spaces, and therefore provide a tool for planners and designers to see on which aspect they can improve the urban green space and help them make informed decisions. Through a case study comparison between the city of Delft, The Netherlands, and the historic center district, Yuexiu in Guangzhou, China, this study provides a method which is applicable and reproducible for either small cities or city districts. It concludes with providing a strategy for using nature based solutions to improve spatial justice in relationship to urban green space connectivity.
+
+## Methods
+### analytical framework
+Define concepts:
+UGS - what is ugs? 
+Connectivity
+Biodiversity
+Spatial justice
+
+The framework consists of four analytical dimensions, linked to the research objectives: accessibility, connectivity, biodiversity, and spatial justice. Each dimension contains several indicators, which are calculated for a set spatial unit and are integrated through MCDA. This analytical framework allows comparison between cities of different scales while maintaining methodological consistency. 
+Through ... methods?... these criteria are combined in order to be able to define the quality of UGS in relationship to spatial justice. 
+
+### Data collection
+
+### MCDA
+Urban green space quality cannot be defined by a single indicator and there are different dimensions of quality. With a Spatial Multi-Criteria Decision Analysis conditions in certain locations are evaluated through weighing different criteria. The categories derived from the research objectives are broken down to form these criteria and enables the integration of ecological, social, and spatial indicators into one framework. This analysis is geographically referenced through the use of a spatial unit - to be defined. By combining a variety of variables there is an analytical framework created which is applicable to any location using any spatial unit comparable in size - to be defined further. The MCDA framework combines indicators per category into an analytical dataset, where these indicators are weighted and aggregated into a quality score. The score allows spatial comparison between spatial units (neighbourhoods). 
+The MCDA is a decision-support tool for decision makers such as planners, and leaved it open to options. 
+
+### Typology construction
+Urban green spaces are heterogeneous (source 2). Different spaces provide in different ecological and social functions. Typologies can help identify recurring patterns across neighbourhoods/contexts. To identify these recurring patterns, this research does a typology construction, making use of the indicators derived from the MCDA The typology construction happens through a K-mean clustering, which is a statistical grouping method which groups observations into clusters based on similarity. These observations are grouped based on their MCDA indicator values. Through answering which urban green spaces are similar to others, there is a typology set created, which can then be used to classify and rate the chosen location on its urban green space quality. Resulting typologies reveal different combinations of accessibility, connectivity, biodiversity, and the neighbourhoods' demographic context.
+
+Possible typologies:
+to be defined from analysis
+
+The typologies support targeted planning interventions. 
+
+### Spatial unit
+Describe what a spatial unit is - see literature references. 
+describe Modifiable Areal Unit Problem (MAUP)
+
+Spatial analysis outcomes depend on a chosen spatial unit. To ensure comparability, the study uses administrative neighbourhood units. However due to a scale difference, the comparison is done on scale of the entire city of Delft and the Yuexiu district in Guangzhou. These are comparable in surface (mention surface km2) and amount of neighbourhoods (mention #). Using administrative units increases policy relevance and reproducability through different scales (from neighbourhood to municipality)
+- difference in scale of guangzhou and delft, allows us to find comparable city districts and also allows planners/municipalities to work with the distinctive characters of city districts, makes it applicable in small cities as well as large cities. 
+
+## Results
+### conclusion analysis 1: accessibility
+quantify the spatial distribution and accessibility of urban green spaces
+How accessible are green spaces for residents?
+
+green space per capita
+300m accessibility buffer
+mean distance to green space
+percentage of residents within walking distance of green space.
+
+which typologies perform best and worst
+comparison between delft and quangzhou
+
+### Running Code
 
 When you click the **Render** button a document will be generated that includes both content and the output of embedded code. You can embed code like this:
 
@@ -61,12 +168,6 @@ delft_roads <- st_intersection(delft_osm_roads_proj, delft_bnd)
 delft_water <- st_intersection(delft_osm_water_proj, delft_bnd)
 
 ```
-
-## Introduction
-
-testing!
-
-## Methods
 
 ```{r}
 # 300m buffer area
@@ -203,7 +304,42 @@ ggplot() +
   )
 
 ```
+### conclusion analysis 2 : connectivity 
+Evaluate connectivity between different urban green spaces.
+What are the different typologies of urban green spaces and their access?
 
+fragmentation patterns
+number and size of green patches
+connectivity graph results
+ecological corridors
+road network around green patches
+
+which typologies perform best and worst
+comparison between delft and quangzhou
+
+### conclusion analysis 3: biodiversity
+ Assess spatial justice through the relationship between population and access to green space. 
+How equitable are green spaces distributed across administrative units in relation to population demographics?
+
+NVDI 
+species density
+relationship between connectivirty and biodiversity
+relationship between demographics and biodiversity
+
+which typologies perform best and worst
+comparison between delft and quangzhou
+
+### conclusion analysis 4: spatial justice by comparison
+Compare how strong these relationships are in different cities (Delft vs Guangzhou).
+How does urban green space relate to spatial justice in Delft compared to Guangzhou?
+which city performs better on each analysis? which one is more equitable
+
+gini coefficient
+green space per capita inequalities
+relationship between population density and green access
+income correlation
+what neighbourhoods are troubled? does this have to do with the heritage core in delft as well as guangzhou (both heritage centres)
+```{r}
 ```{r}
 # Install packages if you do not have them
 install.packages(c("sf", "ineq", "tidyverse"))
@@ -251,12 +387,34 @@ ggplot(grid_map_delft) +
   labs(title = paste("Delft Green Space (Gini:", round(green_gini, 3), ")"))
 ```
 
-### MCDA
-
-### Typology construction
-
-## Results
+### conclusion analysis 5: NBS corridor prioritisation
+Through applying MCDA, the study provides a method to overlay low-access zones and disconnected patches, which allows the planner/user (tbd) to map priority intervention areas. 
 
 ## Discussion
+Translate analytical findings into strategies for increasing UGS quality.
+How do the differences between the two cities show how connectivity and accessibility can improve spatial justice? What strategies  are suggested to improve spatial justice?
+Potential interventions:
+green corridors, linear parks, canal-side ecological networks, pocket parks, urban forest, biodiversity stepping stones, street greening, green roofs and walls. 
+- connect those to a weakness found in the analysis.
+
+### shortcomings
+OSM data completeness differs between cities, also language barrier and access to chinese data.
+GBIF observations may contain sampling bias
+NDVI does not directly measure biodiversity
+different city scales influence comparability
+administrative boundaries introduce MAUP effects.
+more... 
+
+### reproducability
+use of globally availbale datasets
+methodology can be replicated in other cities/districts
+framework is independent of local planning systems
+GIS workflow can be reproduced in QGIS and R
+indicators can be adapted to local contexts.
+
+### further research 
+citizen participation through surveys
+ecosystem valuation (more in depth)
 
 ## Conclusion
+Spatial justice is not only determined by the quality of green space, but by how well green spaces are connected, accessible, and ecologically functional. 

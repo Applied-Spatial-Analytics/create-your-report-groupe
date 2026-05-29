@@ -1,6 +1,6 @@
 ---
 title: "Title of your report"
-subtitle: "Project report of Group #"
+subtitle: "Project report of Group E"
 author:
   - name: "Roxanne"
     affiliation: "MSc Urbanism"
@@ -8,49 +8,248 @@ author:
     affiliation: "MSc Geomatics"
   - name: "Daman Dogra"
     affiliation: "MSc Geomatics"
-  - name: "Arda Baysal"
-    affiliation: "MSc Geomatics"
 format: html
 ---
-
-::: callout
-## This is a computational notebook
-
-Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see <https://quarto.org>.
 
 ## Running Code
 
 When you click the **Render** button a document will be generated that includes both content and the output of embedded code. You can embed code like this:
 
 ```{r}
-1 + 1
-```
+# import packages & load libraries
+install.packages("sf")
+install.packages("tiff")
+library(sf)
+library(ggplot2)
 
-You can add options to executable code like this 
+```
 
 ```{r}
-#| echo: false
-2 * 2
+library(dplyr)
 ```
 
-The `echo: false` option disables the printing of code (only output is displayed).
+```{r}
+# import geopackages
 
-You can delete this entire callout between and including the lines
-```
-::: callout
-```
-and
+# Yuexiu boundary
+yuexiu_bnd <- read_sf("/Users/belinaileen/Desktop/guangzhou/yuexiu_boundary.gpkg", layer = "yuexiu_boundary")
+
+# layers
+guangzhou_osm_green_proj <- read_sf("/Users/belinaileen/Desktop/guangzhou/guangzhou_osm_green_proj.gpkg", layer = "guangzhou_osm_green_proj")
+guangzhou_osm_roads_proj <- read_sf("/Users/belinaileen/Desktop/guangzhou/guangzhou_osm_roads_proj.gpkg", layer = "guangzhou_osm_roads_proj")
+guangzhou_osm_water_proj <- read_sf("/Users/belinaileen/Desktop/guangzhou/guangzhou_osm_water_proj.gpkg", layer = "guangzhou_osm_water_proj")
+
+# clip yuexiu from guangzhou dataset
+yuexiu_green <- st_intersection(guangzhou_osm_green_proj, yuexiu_bnd)
+yuexiu_roads <- st_intersection(guangzhou_osm_roads_proj, yuexiu_bnd)
+yuexiu_water <- st_intersection(guangzhou_osm_water_proj, yuexiu_bnd)
 
 ```
-:::
+
+```{r}
+# Yuexiu boundary
+delft_bnd <- read_sf("/Users/belinaileen/Desktop/data_delft/delft_boundary_proj.gpkg")
+
+# layers
+delft_osm_green_proj <- read_sf("/Users/belinaileen/Desktop/data_delft/delft_osm_green_proj.gpkg")
+delft_osm_roads_proj <- read_sf("/Users/belinaileen/Desktop/data_delft/delft_osm_roads_proj.gpkg")
+delft_osm_water_proj <- read_sf("/Users/belinaileen/Desktop/data_delft/delft_osm_water_proj.gpkg")
+
+# clip yuexiu from delft dataset
+delft_green <- st_intersection(delft_osm_green_proj, delft_bnd)
+delft_roads <- st_intersection(delft_osm_roads_proj, delft_bnd)
+delft_water <- st_intersection(delft_osm_water_proj, delft_bnd)
+
 ```
-and start the report from the Introduction section below.
-:::
 
 ## Introduction
+
 testing!
 
 ## Methods
+
+```{r}
+# 300m buffer area
+delft_green_buffer <- st_buffer(delft_green, dist = 300)
+
+ggplot() +
+  # buffer layer  
+  geom_sf(data = delft_green_buffer, fill = "lightgray", color = "darkgray", alpha = 0.5) +
+  
+  # visualise green areas
+  geom_sf(data = delft_green, fill = "forestgreen", color = "darkgreen") +
+  
+  # add Yuexiu boundary for context
+  geom_sf(data = delft_bnd, fill = NA, color = "black", linewidth = 0.8) +
+  
+  # clean map
+  theme_minimal() +
+  labs(title = "Delft Green Areas with 300m Buffer Zone")
+```
+
+```{r}
+# 300m buffer area
+yuexiu_green_buffer <- st_buffer(yuexiu_green, dist = 300)
+
+ggplot() +
+  # buffer layer  
+  geom_sf(data = yuexiu_green_buffer, fill = "lightgray", color = "darkgray", alpha = 0.5) +
+  
+  # visualise green areas
+  geom_sf(data = yuexiu_green, fill = "forestgreen", color = "darkgreen") +
+  
+  # add Yuexiu boundary for context
+  geom_sf(data = yuexiu_bnd, fill = NA, color = "black", linewidth = 0.8) +
+  
+  # clean map
+  theme_minimal() +
+  labs(title = "Yuexiu Green Areas with 300m Buffer Zone")
+```
+
+```{r}
+# buffer: green spaces (100m) and walkability from road network (400m)
+green_100_buffers <- st_buffer(yuexiu_green, dist = 400)
+walkable_network_buffer <- st_buffer(yuexiu_roads, dist = 50)
+
+# find intersection between green 100m buffer and road network
+yuexiu_walkable_roads <- st_intersection(walkable_network_buffer, green_100_buffers)
+
+ggplot() + 
+  # yiexiu boundary
+  geom_sf(data = yuexiu_bnd, fill = "#F5F5F5", color = "#D3D3D3", linewidth = 0.5) + 
+  
+  # intersection data
+  geom_sf(data = yuexiu_walkable_roads, fill = "#d5f7d5", color = "#2E7D32", alpha = 0.6) + 
+  
+  theme_minimal() + 
+  labs(
+    title = "Walkable Green Access Zones",
+    subtitle = "Intersection of 400m Green Buffer & 50m Road Buffer",
+    x = "Longitude", 
+    y = "Latitude"
+  ) + 
+  theme(
+    plot.title = element_text(face = "bold", size = 14),
+    plot.subtitle = element_text(size = 10, color = "dimgray"),
+    panel.grid.major = element_line(color = "#E0E0E0", linewidth = 0.2)
+  )
+
+```
+
+```{r}
+# buffer 50,150,300m 
+dgreen_50m  <- st_buffer(delft_green, dist = 50)
+dgreen_150m <- st_buffer(delft_green, dist = 150)
+dgreen_300m <- st_buffer(delft_green, dist = 300)
+
+# intersection between yuexiu and green areas
+droads_300m <- st_intersection(delft_roads, dgreen_300m)
+droads_150m <- st_intersection(delft_roads, dgreen_150m)
+droads_50m  <- st_intersection(delft_roads, dgreen_50m)
+
+# visualisation
+ggplot() + 
+  geom_sf(data = delft_bnd, fill = "#F5F5F5", color = "#D3D3D3", linewidth = 0.5) + 
+  
+  geom_sf(data = droads_300m, fill = "#ffdede", color = "#ffdede", alpha = 0.6) + 
+  
+  geom_sf(data = droads_150m, fill = "#ffa6a6", color = "#ffa6a6", alpha = 0.6) + 
+  
+  geom_sf(data = droads_50m, fill = "#bf5454", color = "#bf5454", alpha = 0.6) + 
+  
+  theme_minimal() + 
+  labs(
+    title = "Walkable Green Access Zones",
+    subtitle = "Intersection of 400m Green Buffer & 50m Road Buffer",
+  ) + 
+  theme(
+    plot.title = element_text(face = "bold", size = 14),
+    plot.subtitle = element_text(size = 10, color = "dimgray"),
+    panel.grid.major = element_line(color = "#E0E0E0", linewidth = 0.2)
+  )
+```
+
+```{r}
+
+# buffer 50,150,300m 
+green_50m  <- st_buffer(yuexiu_green, dist = 50)
+green_150m <- st_buffer(yuexiu_green, dist = 150)
+green_300m <- st_buffer(yuexiu_green, dist = 300)
+
+# intersection between yuexiu and green areas
+roads_300m <- st_intersection(yuexiu_roads, green_300m)
+roads_150m <- st_intersection(yuexiu_roads, green_150m)
+roads_50m  <- st_intersection(yuexiu_roads, green_50m)
+
+# visualisation
+ggplot() + 
+  geom_sf(data = yuexiu_bnd, fill = "#F5F5F5", color = "#D3D3D3", linewidth = 0.5) + 
+  
+  geom_sf(data = roads_300m, fill = "#defeff", color = "#defeff", alpha = 0.6) + 
+  
+  geom_sf(data = roads_150m, fill = "#b1eafa", color = "#b1eafa", alpha = 0.6) + 
+  
+  geom_sf(data = roads_50m, fill = "#378ca3", color = "#378ca3", alpha = 0.6) + 
+  
+  theme_minimal() + 
+  labs(
+    title = "Walkable Green Access Zones",
+    subtitle = "Intersection of 400m Green Buffer & 50m Road Buffer",
+  ) + 
+  theme(
+    plot.title = element_text(face = "bold", size = 14),
+    plot.subtitle = element_text(size = 10, color = "dimgray"),
+    panel.grid.major = element_line(color = "#E0E0E0", linewidth = 0.2)
+  )
+
+```
+
+```{r}
+# Install packages if you do not have them
+install.packages(c("sf", "ineq", "tidyverse"))
+library(sf)
+library(ineq)
+library(tidyverse)
+```
+
+```{r}
+# 50x50m grid 
+grid <- st_make_grid(yuexiu_bnd, cellsize = c(50, 50)) %>% st_sf()
+yuexiu_green$green_area <- as.numeric(st_area(yuexiu_green))
+
+grid_map <- st_interpolate_aw(yuexiu_green["green_area"], grid, extensive = TRUE)
+
+# gini calculation
+green_gini <- Gini(grid_map$green_area)
+print(green_gini)
+
+# map plotting
+ggplot(grid_map) +
+  geom_sf(aes(fill = green_area), color = NA) +
+  scale_fill_viridis_c(name = "Green Area") +
+  theme_minimal() +
+  labs(title = paste("Yuexiu Green Space (Gini:", round(green_gini, 3), ")"))
+
+```
+
+```{r}
+# 50x50m grid 
+grid <- st_make_grid(delft_bnd, cellsize = c(50, 50)) %>% st_sf()
+delft_green$green_area <- as.numeric(st_area(delft_green))
+
+grid_map_delft <- st_interpolate_aw(delft_green["green_area"], grid, extensive = TRUE)
+
+# gini calculation
+green_gini_delft <- Gini(grid_map_delft$delft_green)
+print(green_gini_delft)
+
+# map plotting
+ggplot(grid_map_delft) +
+  geom_sf(aes(fill = delft_green), color = NA) +
+  scale_fill_viridis_c(name = "Green Area") +
+  theme_minimal() +
+  labs(title = paste("Delft Green Space (Gini:", round(green_gini, 3), ")"))
+```
 
 ### MCDA
 
@@ -61,4 +260,3 @@ testing!
 ## Discussion
 
 ## Conclusion
-

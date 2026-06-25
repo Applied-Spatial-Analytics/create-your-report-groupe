@@ -275,36 +275,74 @@ Lastly, spatial justice is examined by comparing the behavior of Lorenz gini of 
 ### 4. Connectivity
 
 ```{r}
-#| label: eucl
+#| label: fig-eucl
 #| fig-cap: "Eucladian Nearest Neighbour Distance"
 #| 
 knitr::include_graphics(file.path(OUT_ROOT, "fig_enn_distribution.png"))
 ```
 
-Through figure @eucl, we can see how majority of the green patches across the city are close to one another (below the 200m threshold). This indicate high connectivity (based on low distance traveled between one green patch to another). However this is not the case with Yuexiu, where green patches are located further away from each other (all exceeding the 200m threshold). This confirms that Yuexiu has more structurally isolated green patches with one another compared to Delft.
+Through figure @fig-eucl, we can see how majority of the green patches across the city are close to one another (below the 200m threshold). This indicate high connectivity (based on low distance traveled between one green patch to another). However this is not the case with Yuexiu, where green patches are located further away from each other (all exceeding the 200m threshold). This confirms that Yuexiu has more structurally isolated green patches with one another compared to Delft.
 
 ```{r}
-#| label: fragmetrics
+#| label: fig-fragm
+#| fig-cap: "Fragmentation metrics"
+#| 
 knitr::include_graphics(file.path(OUT_ROOT, "fig_fragmentation_metrics.png"))
 ```
 
-Figure @fragmetrics reveal that while Delft has much higher number of patches, its distance between the patches is also subsequenly lower than of Yuexiu's. However, this high number of patches is also followed by its patch size that is not very large. This is the opposite when compared to Yuexiu, that while number of patches is much lower and distance in between patches is much further away compared to Delft, the size of each patch seen by the percentage of patches exceeding 1 ha and mean patch size (in ha) are much larger compared to Delft. This implies that while Delft focuses more on more well-connected green patches across the city, Yuexiu may focus more on providing large green spaces as leisure than that of connectivity, as demonstarted by Delft.
+Figure @fig-fragm reveal that while Delft has much higher number of patches, its distance between the patches is also subsequenly lower than of Yuexiu's. However, this high number of patches is also followed by its patch size that is not very large. This is the opposite when compared to Yuexiu, that while number of patches is much lower and distance in between patches is much further away compared to Delft, the size of each patch seen by the percentage of patches exceeding 1 ha and mean patch size (in ha) are much larger compared to Delft. This implies that while Delft focuses more on more well-connected green patches across the city, Yuexiu may focus more on providing large green spaces as leisure than that of connectivity, as demonstarted by Delft.
 
 ```{r}
-#| label: connectmaps
+#| label: fig-connectmaps
+#| fig-cap: "Green patch connectivity maps for Yuexiu and Delft."
+
 knitr::include_graphics(file.path(OUT_ROOT, "fig_connectivity_maps.png"))
 ```
 
-The figure visualizes UGS as a functional network, as it takes centroids out of each patch (as nodes) and edges, representing potential dispersal paths between each green patches. The edges then function as potential corridors to enable movement of wildlife or human between the otherwise green patches. Thus based on this, areas with least orange lines/edges represent where weakest links are due to its far proximities with other green areas. In contrast to Delft's high connectivity network, Yuexiu reveals more limited potential for connectivity through green corridors. This finding is consistent with previous figures' finding (@fragmetrics) where green pacthes in Yuexiu may be further away compared to delft, where green patches are closer to each other yet smaller. Despite the lack of potential corridors in Yuexiu, the city's larger green patches still offer potential for possible connectivity. However, this implies that more planning and infrastructure investment needs to exist for connectivity to be in place.
+The figure @fig-connectmaps visualizes UGS as a functional network, as it takes centroids out of each patch (as nodes) and edges, representing potential dispersal paths between each green patches. The edges then function as potential corridors to enable movement of wildlife or human between the otherwise green patches. Thus based on this, areas with least orange lines/edges represent where weakest links are due to its far proximities with other green areas. In contrast to Delft's high connectivity network, Yuexiu reveals more limited potential for connectivity through green corridors. This finding is consistent with previous figures' finding @fig-fragm where green pacthes in Yuexiu may be further away compared to delft, where green patches are closer to each other yet smaller. Despite the lack of potential corridors in Yuexiu, the city's larger green patches still offer potential for possible connectivity. However, this implies that more planning and infrastructure investment needs to exist for connectivity to be in place.
 
 ```{r}
-#| label: betweenness
+#| label: fig-betweenness
 knitr::include_graphics(file.path(OUT_ROOT, "fig_betweenness_vs_area.png"))
 ```
 
 ### 5. MCDA
 
-conclusion MCDA & NBS corridor prioritisation Through applying MCDA, the study provides a method to overlay low-access zones and disconnected patches, which allows the planner/user (tbd) to map priority intervention areas.
+```{r}
+#| label: fig-connectmaps
+#| fig-cap: "Green patch connectivity maps for Yuexiu and Delft."
+
+knitr::include_graphics(file.path(OUT_ROOT, "fig_connectivity_maps.png"))
+```
+
+@fig-connectmaps visualizes a normalized figure of the level of grene infrastyructure urgency needs to be implemented (0-1). Dark green suggests low urgency for the need of more intervention, while dark red suggesting high urgency. In Yuexiu, the spatial pattern is more fragmented due to its historical characteristic context. On the other hand, Delft's high uregncy zone is less fragmented and more concentrated in the central-north strip. This finding aligns with @fig-meandist, which reveal how isolated these neighborhoods are with other existing green patches. Moreover, assigning higher priority to these areas is justified as there needs spatial equity to be addressed, consequently fostering better connectivity in the broader urban network.
+
+```{r}
+#| label: fig-mcdaradar
+#| fig-cap: "Suggestion for green corridors"
+#|
+knitr::include_graphics(file.path(OUT_ROOT, "fig_mcda_radar.png"))
+```
+
+For each of the four criteria, the city-wide mean of the normalized urgency scores (@fig-connectmaps) is calculated and displayed on @fig-mcdaradar. Thus, higher bar indicate greater average urgency compared to other dimensions. In both cities, connectivity pose higher relative urgency compared to other dimensions, opposing to equity/spatial justice, achieving lowest need for intervention. This is an interesting observation as connectivity is both central to the discussion of nature-based solution and efforts seemed to have been made to ensure connectivity of green patches in Delft, however, it still seems to need most urgent care compared to other metrics. The finding thus suggests the need for explicit connectivity effort through establishments of green corridor between green patches in both cities as part of further effort to our focus; nature-based solutions.
+
+```{r}
+#| label: fig-prioritytiers
+#| fig-cap: "Green patch connectivity maps for Yuexiu and Delft."
+#|
+knitr::include_graphics(file.path(OUT_ROOT, "fig_priority_tiers"))
+```
+
+The priority tier (@fig-prioritytiers) divides the range of tiers equally to three groups (tertile classification). This is a choice of classification, which does not aim to exactly set 33% of a city to genuinely needs more urgent intervention as our choice of normalization also does not take into account the within group value difference to really determine the amount of urgent care actually required. Consistent with previous figures, Yuexiu's high priority zones are scattered, reflecting more fragmented planning scheme in terms of urban green infrastructure, compared to Delft where its high-priority zones are more concentrated, that may suggest a more underlying systematic issue around the area.
+
+```{r}
+#| label: fig-nbscorridors
+#| fig-cap: "Suggestion for green corridors"
+#|
+knitr::include_graphics(file.path(OUT_ROOT, "fig_nbs_corridors.png"))
+```
+
+@fig-nbscorridors overlays areas of high priorities determined by the MCDA and isolated green areas. The overlay of the two layers result in more easily identifiable places/locations, as direct correspondance to our nature-based solutions. As seen from the figure (@fig-nbscorridors), Yuexiu exhibit much more need for potential corridors compared to Delft. This finding is consistent as also with Yuexiu's fragmented green patches across the city; consequently, more interventions is needed to establish functional connectivity between these isolated sites. This is also interesting considering
 
 ## Discussion
 

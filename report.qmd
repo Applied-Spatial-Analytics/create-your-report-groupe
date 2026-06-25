@@ -15,7 +15,6 @@ format:
 output-dir: docs
 ---
 
-
 ```{r setup, include=FALSE}
 source(here::here("R/00_config.R"))
 ```
@@ -36,12 +35,11 @@ Spatial justice concerns the fair distribution of urban resources and opportunit
 
 DEFINE QUALITY
 
-Due to spatial justice being increasingly reckognised as an important factor for urban quality/wellbeing, municipalities and planners are looking for ways to improve not only the amount, but also the quality of these urban green spaces. Through analysing the categories, and understanding how accessibility identifies opportunities to improve spatial justice and how connectivity influences the quality, this study provides a tool for improvement. 
+Due to spatial justice being increasingly reckognised as an important factor for urban quality/wellbeing, municipalities and planners are looking for ways to improve not only the amount, but also the quality of these urban green spaces. Through analysing the categories, and understanding how accessibility identifies opportunities to improve spatial justice and how connectivity influences the quality, this study provides a tool for improvement.
 
 How urban green spaces are distributed across different city districts depends not only on factors such as accessibility and proximity, but also neighbourhood profile differences, such as density and income. Residents may live close to green areas, but have limited access due to fragmentation or poor connectivity (source3). -\> redundant?
 
 Having optimal connectivity between urban green spaces increases quality; it becomes more accessible for humans as well as non-humans, providing better habitat and improving the ecological value of urban green spaces. Connected green networks improve ecological functioning by facilitating movement of species and strengthens the ecosystem resilience. The amount of biodiversity thus plays a role in determining the quality of the UGS (Irvine et al., 2008).
-
 
 ### Literature Review
 
@@ -283,7 +281,7 @@ Lastly, spatial justice is examined by comparing the behavior of Lorenz gini of 
 knitr::include_graphics(file.path(OUT_ROOT, "fig_enn_distribution.png"))
 ```
 
-Through figure @eucl, we can see how majority of the green patches across the city are close to one another (below the 200m threshold). This indicate high connectivity (based on low distance traveled between one green patch to another). However this is not the case with Yuexiu, where green patches are located further away from each other (all exceeding the 200m threshold). This confirms that Yuexiu has more structurally isolated green patches with one another compared to Delft. 
+Through figure @eucl, we can see how majority of the green patches across the city are close to one another (below the 200m threshold). This indicate high connectivity (based on low distance traveled between one green patch to another). However this is not the case with Yuexiu, where green patches are located further away from each other (all exceeding the 200m threshold). This confirms that Yuexiu has more structurally isolated green patches with one another compared to Delft.
 
 ```{r}
 #| label: fragmetrics
@@ -292,12 +290,12 @@ knitr::include_graphics(file.path(OUT_ROOT, "fig_fragmentation_metrics.png"))
 
 Figure @fragmetrics reveal that while Delft has much higher number of patches, its distance between the patches is also subsequenly lower than of Yuexiu's. However, this high number of patches is also followed by its patch size that is not very large. This is the opposite when compared to Yuexiu, that while number of patches is much lower and distance in between patches is much further away compared to Delft, the size of each patch seen by the percentage of patches exceeding 1 ha and mean patch size (in ha) are much larger compared to Delft. This implies that while Delft focuses more on more well-connected green patches across the city, Yuexiu may focus more on providing large green spaces as leisure than that of connectivity, as demonstarted by Delft.
 
-
 ```{r}
 #| label: connectmaps
 knitr::include_graphics(file.path(OUT_ROOT, "fig_connectivity_maps.png"))
 ```
 
+The figure visualizes UGS as a functional network, as it takes centroids out of each patch (as nodes) and edges, representing potential dispersal paths between each green patches. The edges then function as potential corridors to enable movement of wildlife or human between the otherwise green patches. Thus based on this, areas with least orange lines/edges represent where weakest links are due to its far proximities with other green areas. In contrast to Delft's high connectivity network, Yuexiu reveals more limited potential for connectivity through green corridors. This finding is consistent with previous figures' finding (@fragmetrics) where green pacthes in Yuexiu may be further away compared to delft, where green patches are closer to each other yet smaller. Despite the lack of potential corridors in Yuexiu, the city's larger green patches still offer potential for possible connectivity. However, this implies that more planning and infrastructure investment needs to exist for connectivity to be in place.
 
 ```{r}
 #| label: betweenness
@@ -305,8 +303,8 @@ knitr::include_graphics(file.path(OUT_ROOT, "fig_betweenness_vs_area.png"))
 ```
 
 ### 5. MCDA
-conclusion MCDA & NBS corridor prioritisation
-Through applying MCDA, the study provides a method to overlay low-access zones and disconnected patches, which allows the planner/user (tbd) to map priority intervention areas.
+
+conclusion MCDA & NBS corridor prioritisation Through applying MCDA, the study provides a method to overlay low-access zones and disconnected patches, which allows the planner/user (tbd) to map priority intervention areas.
 
 ## Discussion
 

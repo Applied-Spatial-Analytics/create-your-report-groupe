@@ -277,13 +277,32 @@ Lastly, spatial justice is examined by comparing the behavior of Lorenz gini of 
 ### 4. Connectivity
 
 ```{r}
+#| label: eucl
+#| fig-cap: "Eucladian Nearest Neighbour Distance"
+#| 
 knitr::include_graphics(file.path(OUT_ROOT, "fig_enn_distribution.png"))
-knitr::include_graphics(file.path(OUT_ROOT, "fig_fragmentation_metrics.png"))
-knitr::include_graphics(file.path(OUT_ROOT, "fig_connectivity_maps.png"))
-knitr::include_graphics(file.path(OUT_ROOT, "fig_betweenness_vs_area.png"))
 ```
 
-interpretation mean nearest distance to green patch: Delft \~10m vs Yuexiu \~200m. Delft's green space is essentially continuous — patches are almost touching. Yuexiu's patches are isolated islands separated by \~200m of built fabric on average. This is the connectivity crisis that drives our NbS corridor proposals. From a wildlife/biodiversity perspective, a 200m gap is a hard barrier for most invertebrates and small mammals.
+Through figure @eucl, we can see how majority of the green patches across the city are close to one another (below the 200m threshold). This indicate high connectivity (based on low distance traveled between one green patch to another). However this is not the case with Yuexiu, where green patches are located further away from each other (all exceeding the 200m threshold). This confirms that Yuexiu has more structurally isolated green patches with one another compared to Delft. 
+
+```{r}
+#| label: fragmetrics
+knitr::include_graphics(file.path(OUT_ROOT, "fig_fragmentation_metrics.png"))
+```
+
+Figure @fragmetrics reveal that while Delft has much higher number of patches, its distance between the patches is also subsequenly lower than of Yuexiu's. However, this high number of patches is also followed by its patch size that is not very large. This is the opposite when compared to Yuexiu, that while number of patches is much lower and distance in between patches is much further away compared to Delft, the size of each patch seen by the percentage of patches exceeding 1 ha and mean patch size (in ha) are much larger compared to Delft. This implies that while Delft focuses more on more well-connected green patches across the city, Yuexiu may focus more on providing large green spaces as leisure than that of connectivity, as demonstarted by Delft.
+
+
+```{r}
+#| label: connectmaps
+knitr::include_graphics(file.path(OUT_ROOT, "fig_connectivity_maps.png"))
+```
+
+
+```{r}
+#| label: betweenness
+knitr::include_graphics(file.path(OUT_ROOT, "fig_betweenness_vs_area.png"))
+```
 
 ### 5. MCDA
 conclusion MCDA & NBS corridor prioritisation

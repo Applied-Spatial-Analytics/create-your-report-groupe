@@ -350,7 +350,23 @@ Translate analytical findings into strategies for increasing UGS quality. How do
 
 ### Reproducibility
 
-As sources are gathered through globally availbale datasets, methodology can be replicated in other cities/districts. Framework is also available on Github and independent of local planning systems. GIS workflow can be reproduced in QGIS and R indicators depending on local contexts.
+**Reproducibility of from data source**:
+* **OSM** is a crowd-sourced, volunteer-based global map providing vector features such as building, roads and point of interests. It uses ODbL 1.0 licensing/CC-BY-SA 2.0, which means that alteration, transformation is allowed yet there is legal requirement to distribute the new version via the same licensing. 
+* **WorldPop, VIIRS and NDVI**: These datasets all come from sources from CC-BY 4.0 or public licensing, allowing for sharing, adapting or commercial uses as long as credits are given for creator.
+
+**Reproducibility of pipeline workflow**:
+The entire analysis workflow is designed for full reproducibility and can be executed via running groupE/run_pipeline.R. The project relies on several R libraries, which can be installed or updated through the following script:
+packages <- c("here", "sf", "terra", "dplyr", "ggplot2", "patchwork", "ggspatial")
+install.packages(setdiff(packages, installed.packages()[,"Package"]))
+
+Moreover, to support open science, our workflow follows the FAIR; Findable, Accessible, Interoperable, and Reusable data principles. Findability and accessibility of our pipeline is demonstarted through our public GitHub repository, with explicit open data sources to ensure resuability of data principles. 
+
+### AI usage
+
+Throughout the development of this assignment, we have been assisted by OpenAI’s
+ChatGPT version GPT-5.5 and Google’s Gemini 3 Flash (Free tier). We have reviewed
+and understood all suggestions made by those models, and take full responsibility for the
+content being submitted. AI is used specifically to support our R coding.
 
 ### Limitations
 

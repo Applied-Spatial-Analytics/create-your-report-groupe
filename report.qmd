@@ -358,7 +358,13 @@ OSM data completeness differs between cities and is a crowd-sourced data. This m
 
 ### Future Work
 
-citizen participation through surveys ecosystem valuation (more in depth) running the workflow with more than 4 indicators
+**Sensitivity analysis application on MCDA weighing distribution:** Sensitivity analysis can be applied onto weights within the MCDA analysis to examine how different weighing combinations affect the MCDA result. This would mitigate the inherent subjectivity on the opinion of authors and ensure robustness of multiple what-if scenarios. Thus, ensuring a resilient and informed decision-making process.
+
+**Dataset incoroporated enable direct comparison between two cities**: This directly relates to how data sourced through OSM is lower in Chinese cities (such seen in the GBIF analysis on biodiversity) compared to that of Delft. This will enhance consistency and reliability of cross-city comparisons for direct standardization.
+
+**Incorporation of more urban cooling quantitative analysis**: The blue-green infrastructure analysis can also be improved with more urban cooling or biodiversity effects, which would be particularly relevant given the context of both cities; Delft's canal-rich characteristic and within Yuexiu's central area within the Pearl River Delta. This directly translates improving urban green space quality.
+
+**Comparison between two cities more comparable in size and population density**: To improve the validity of cross-city comparison, future studies hope to ensure alignment between city sizes and population density. Reducing the current discrepancy in scale would result in more meaningful comparison for future planning recommendations.
 
 ## Conclusion
 

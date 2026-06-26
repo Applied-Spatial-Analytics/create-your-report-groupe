@@ -1,0 +1,110 @@
+/*-- scss:defaults --*/
+$primary: #434930;        // green_dark — links, active TOC item
+$body-bg: #fdfbf5;        // warm off-white, not stark white
+$body-color: #2b2b2b;
+$headings-color: #434930; // green_dark
+$link-color: #8a99bc;     // blue
+$toc-color: #6b6e43;      // green_mid
+$font-family-sans-serif: "Source Sans Pro", "Helvetica Neue", sans-serif;
+$font-family-monospace: "Fira Code", monospace;
+
+/*-- scss:rules --*/
+
+// Headings
+h1, h2 {
+  border-bottom: 2px solid #a3a479;
+  padding-bottom: 0.3rem;
+}
+
+h1 {
+  font-size: 2rem;
+  margin-top: 2.5rem;
+}
+
+h2 {
+  margin-top: 2rem;
+}
+
+h3 {
+  color: #6b6e43;
+  margin-top: 1.5rem;
+}
+
+// Body text
+body {
+  line-height: 1.65;
+}
+
+p {
+  margin-bottom: 1rem;
+}
+
+// Justified body text
+p, li, td, .callout-body {
+  text-align: justify;
+  hyphens: auto;
+}
+
+// Callouts
+.callout-note {
+  border-left-color: #8a99bc;
+}
+
+.callout-tip {
+  border-left-color: #6b6e43;
+}
+
+// Figures and captions
+.figure-caption, figcaption {
+  color: #6b6e43;
+  font-size: 0.9em;
+  font-style: italic;
+  margin-top: 0.5rem;
+  text-align: center;
+}
+
+figure {
+  margin: 2rem 0;
+}
+
+img {
+  border-radius: 4px;
+}
+
+// Code
+code {
+  background-color: #f4ebcc;
+  color: #67262d;
+}
+
+pre {
+  border-left: 3px solid #a3a479;
+  background-color: #fdfbf5;
+}
+
+// Tables
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th {
+  background-color: #f4ebcc;
+  color: #434930;
+  border-bottom: 2px solid #6b6e43;
+}
+
+td {
+  border-bottom: 1px solid #D9D9D9;
+}
+
+// TOC sidebar
+#toc-title {
+  color: #434930;
+  font-weight: bold;
+}
+
+.sidebar nav[role="doc-toc"] ul > li > a.active {
+  color: #6b6e43;
+  font-weight: 600;
+}

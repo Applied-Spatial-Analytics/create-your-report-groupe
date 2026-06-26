@@ -1,4 +1,33 @@
+# R Specific
 .Rproj.user
 .Rhistory
 .RData
 .Ruserdata
+.positai
+.Rapp.history
+
+# Quarto / Reports
+# Ignore the rendered HTML and the folder containing supporting files
+report.html
+site_libs/
+/.quarto/
+
+# Data
+# It is best practice to keep raw data out of GitHub
+# If you want to keep the folders but not the files, use: data/**/*
+data/delft/
+data/Yuexiu/
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# extras
+# pipeline_plan.md
+data.zip
+.github
+
+**/*.quarto_ipynb
+/outputs
+.github
+pages

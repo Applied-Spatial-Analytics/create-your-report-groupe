@@ -1,65 +1,604 @@
 ---
-title: "Title of your report"
-subtitle: "Project report of Group #"
+title: "Spatial Justice through Urban Green Space Connectivity"
+favicon: "https://applied-spatial-analytics.github.io/create-your-report-groupe/docs/favicon.ico"
+bibliography: references.bib
+subtitle: "Project report of Group E"
 author:
-  - name: "Student 1"
+  - name: "Roxanne Vuijk"
+    affiliation: "MSc Urbanism"
+  - name: "Belina Aileen"
     affiliation: "MSc Geomatics"
-  - name: "Student 2"
-    affiliation: "MSc Landscape Architecture"
-  - name: "Student 3"
-    affiliation: "MSc Urbanism"
-  - name: "Student 4"
-    affiliation: "MSc Urbanism"
-  - name: "Student 5"
-    affiliation: "MSc Landscape Architecture"
-format: html
+  - name: "Daman Dogra"
+    affiliation: "MSc Geomatics"
+format:
+  html:
+    output-file: index.html
+    favicon: favicon.ico
+    theme: [cosmo, report.scss]
+    toc: true
+    number-sections: true
+    code-fold: true
+    embed-resources: true
 ---
 
-::: callout
-## This is a computational notebook
-
-Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see <https://quarto.org>.
-
-## Running Code
-
-When you click the **Render** button a document will be generated that includes both content and the output of embedded code. You can embed code like this:
-
-```{r}
-1 + 1
+```{r setup, include=FALSE}
+source(here::here("R/00_config.R"))
 ```
-
-You can add options to executable code like this 
-
-```{r}
-#| echo: false
-2 * 2
-```
-
-The `echo: false` option disables the printing of code (only output is displayed).
-
-You can delete this entire callout between and including the lines
-```
-::: callout
-```
-and
-
-```
-:::
-```
-and start the report from the Introduction section below.
-:::
 
 ## Introduction
 
+Due to rapid urbanisation, the pressure on urban green space (UGS) increases and the benefits are often unevenly distributed across neighborhoods. Green spaces are essential urban infrastructure that influence the physical and mental well-being of inhabitants. They provide a wide range of services, such as urban cooling, air quality improvement and pose opportunities for social interaction. Not only are they beneficial to humans, they also support biodiversity conservation and species movement, thereby enhancing health, ecological, and social outcomes.
+
+However, not all citizens have equal access to these green spaces and they differ in quality. Therefore, their benefits depend not only on the presence of green spaces, but also on their accessibility, ecological quality, and spatial distribution. Research emphasizes implementing multi-functional blue-green infrastructure rather than isolated parks in contemporary planning processes. [@cardinali2024]
+
+Connectivity is a key dimension of green space quality, since urban green spaces often function better as networks rather than independent elements. Connected green networks improve ecological functioning by facilitating movement of species and strengthens the ecosystem resilience. The amount of biodiversity and the ecological condition become indicators of urban green space quality. In addition, better connected green networks improve human access and facilitate movement through cities. Despite growing attention to green infrastructure networks, accessibility, ecological quality, and connectivity are still often assessed independently. [@irvine2013]
+
+As defined by Roberto Rocco (n.d.), spatial justice concerns the equitable distribution of urban resources and opportunities across different population groups. When applied to urban green spaces, it considers not only the quantity of green space, but also its quality. Together they determine whether residents have equitable access to connected and ecologically functional green environments. This is important because unequal access can reinforce existing social and environmental inequalities, making spatial justice an increasingly important consideration in urban planning. [@desousa2018]
+
+Thus in this study, urban green space quality is understood as the combined performance of four dimensions: accessibility, ecological quality, spatial justice, and connectivity. Evaluating these dimensions together, they provide a more comprehensive assessment than considering each independently. To support evidence-based planning, this study integrates these dimensions into a reproducible analytical framework using a Spatial Multi-Criteria Decision Analysis (S-MCDA). The framework combines ecological, spatial, and social indicators to identify priority areas for intervention and is applied to two contrasting urban contexts: Yuexiu District, Guangzhou (China) and Delft (The Netherlands). The methodology is designed to be reproducible for both small cities and city districts. By using globally available datasets and a consistent analytical workflow, the framework can be transferred to other urban contexts to support nature-based planning strategies that improve urban green space quality and spatial justice.
+
+### Study Sites
+
+In China, successful efforts have been made to implement green corridor networks, such as the Chengdu's Tiangfu Greenway, the Beijing urban green corridor, and the Pearl River Delta Greenway Network initiative. From 1986 to 2018, the built-up area of Guangzhou in China continued to increase. As a result of heavy urbanisation, the vegetation area continued to decrease during these 32 years @guo2021 Guangzhou's urban greenway network was introduced as part of the wider Pearl River Delta Greenway Network initiative, which began in 2010. With this Guangzhou became one of the leading cities in implementing this strategy. A study by @tang2022 found that Guangzhou's greenways have met residents' needs between greenway supply and demand. However, high-density areas still prove to have unequal access to ugs.
+
+In contrast, Delft has developed within the Dutch planning tradition of integrating green and blue infrastructure into compact urban development. Rather than relying on large metropolitan greenway programmes, such as Guangzhou, Delft's urban green space has evolved through integrated spatial planning at a much smaller scale. The municipality actively integrates ugs through structural municipal policies and innovative pilot projects. Implementation of small-scale urban infrastructure and connections between neighbourhoods are considered important components of urban liveability. This planning approach makes Delft an interesting counterpart to Guangzhou. (Poptahof, Delft, The Netherlands \| Urban Green-blue Grids, n.d.)
+
+The study compares the urban contexts of Guangzhou, in China and Delft, in The Netherlands. Both cities have a historic urban core and have a relatively high urban green coverage. Urban green spaces cover about 34% of Guangzhou, and similarly, Delft is covered by 33% (HUGSI). Despite these similarities, comparing both cities presents a challenge because of their differences in scale and population density. Delft covers approximately 24 km2 and has a relative low density; the population is 102.000, while Guangzhou has a population of 18.680.000 over 7.433,3 km2 (WorldPop). As a result, Guangzhou is not only about 300 times as big on surface area, it is also approximately 6 times more densely populated than Delft. A direct comparison between the two cities would therefore be inappropriate, requiring the selection of a comparable spatial unit.
+
+```{r}
+#| label: fig-context-gz
+#| fig-cap: "Study sites of Guangzhou and Delft"
+#| out-width: "100%"
+
+knitr::include_graphics(file.path(OUT_ROOT,"fig_context_gz_dl.png"))
+```
+
+Guangzhou is administratively divided into districts. To get a comparable study area, this research focuses on Yuexiu District, the historical core of Guangzhou. Yuexiu covers 33.8 km2 and reports 1.173.100 inhabitants (WorldPop). Although still considerably denser than Delft, it represents a much more comparable spatial scale than the municipality of Guangzhou as a whole. The analytical framework can be applied consistently across both study areas with the use of a spatial unit. This study uses administrative neighbourhood units as the spatial unit. The administrative units are Wijken for Delft, and jiēdào (subdistricts) for Yuexiu. Using administrative units increases policy relevance and reproducibility through different scales.
+
+```{r}
+#| label: fig-context-yx
+#| fig-cap: "Study sites of Yuexiu District (Guangzhou) and Delft"
+#| out-width: "100%"
+
+knitr::include_graphics(file.path(OUT_ROOT, "fig_context_yx_dl.png"))
+```
+
+This study assesses urban green spaces. @fig-ugs shows the assessed composition of urban green spaces in Yuexiu and Delft, and is put in context with roads and water bodies within the administrative boundaries. For the sake of time in this study, peripherical conditions of Yuexiu and Delft are not assessed, which could influence the results, but would be a possibility for further research.
+
+```{r}
+#| label: fig-ugs
+#| fig-cap: "Urban green spaces"
+#| out-width: "100%"
+
+knitr::include_graphics(file.path(OUT_ROOT, "fig_ugs_yx_dl.png"))
+```
+
+## Research Questions
+
+### Research questions
+
+The main research question of this study is: How can urban green space quality assessment help inform on nature-based interventions in Delft and Yuexiu District?
+
+To answer this question, urban green space quality is evaluated through four complementary dimensions: accessibility, ecological quality, spatial justice, and connectivity. Each dimension forms a research objective with a corresponding sub-research question. The results of these analyses are integrated in a framework through a S-MCDA to indentify priority areas for interventions.
+
+### Research objectives
+
+#### Objective 1: Accessibility
+
+Assess the accessibility of urban green spaces for residents.
+
+::: {.callout-note appearance="simple"}
+**SQ1:** How accessible are urban green spaces for residents?
+:::
+
+#### Objective 2: Ecological Quality
+
+Assess the ecological quality of urban green spaces through biodiversity and typology analysis.
+
+::: {.callout-note appearance="simple"}
+**SQ2:** What urban green space typologies can be identified, and what is their ecological quality?
+:::
+
+#### Objective 3: Spatial Justice
+
+Assess the spatial equity of urban green space distribution across administrative units.
+
+::: {.callout-note appearance="simple"}
+**SQ3:** How equitable are urban green spaces distributed across administrative units?
+:::
+
+#### Objective 4: Connectivity
+
+Assess the connectivity between urban green spaces as ecological networks.
+
+::: {.callout-note appearance="simple"}
+**SQ4:** How well are urban green spaces connected to each other?
+:::
+
+#### Objective 5: Strategic Translation
+
+Translate the analytical findings into nature-based planning strategies for improving urban green space quality.
+
+::: {.callout-note appearance="simple"}
+**SQ5:** Which areas require priority intervention, and what nature-based solutions can improve urban green space quality?
+:::
+
 ## Methods
 
-### MCDA
+### Research Design
 
-### Typology construction
+This study addresses its central research question through a comparative analytical framework structured around four thematic objectives: Accessibility, Ecological Quality, Spatial Justice, and Connectivity. Each objective corresponds to a sub-question and is operationalised through spatial analysis methods applied consistently across both cities. The four objective scores are subsequently integrated via Multi-Criteria Decision Analysis (MCDA) to produce a composite urban green space quality score and a spatial prioritisation of Nature-based Solution (NbS) intervention zones.
+
+The study proceeded in two stages:
+
+1. **Stage I - Data Collection and Preprocessing.** All required spatial datasets were collected from public sources, preprocessed into a consistent format, and validated. The resulting layers are provided in the project data folder and serve as fixed inputs to all subsequent analysis.
+2. **Stage II - Thematic analysis.** All analyses were conducted in R from those processed files. The workflow described in Sections 3.3–3.4 is fully reproducible from the provided data using the accompanying R scripts.
+
+---
+
+### Stage I - Data Collection and Preprocessing
+
+To ensure reproducibility, this study relies primarily on globally available and open-access spatial datasets. This enables the framework to be applied consistently across different geographical contexts while minimising dependence on local data availability. Complete equivalence between datasets could not always be achieved across the two cities; limitations are discussed in Section 5.1.
+
+All spatial data were collected via a seven-step Python pipeline, summarised below.
+
+```{r}
+#| label: fig-data-collection
+#| fig-cap: "Seven-step data collection and preprocessing pipeline"
+#| fig-align: center
+#| out-width: "90%"
+knitr::include_graphics(file.path(OUT_ROOT, "data_collection.png"))
+```
+
+#### Step 1 - Administrative boundaries
+
+**Delft.** The municipality boundary was fetched from the PDOK WFS (Kadaster bestuurlijke gebieden), filtered to municipality code `GM0503`, and dissolved to a single polygon. CBS gebiedsindelingen (years 2022–2024) was used as a fallback. Neighbourhood polygons (*buurten*) were fetched from the PDOK wijkenbuurten WFS, clipped to the municipality boundary, and filtered to buurt-level rows (`bu_code` prefix `BU`) to exclude wijk- and gemeente-level aggregates.
+
+**Yuexiu (Guangzhou).** The district boundary and *jiēdào* subdistrict polygons were obtained from GADM v4.1, filtered to `NAME_2 = "Guangzhou"`, and dissolved to a single city polygon.
+
+#### Step 2 - Vector layers
+
+**Delft - green space and water (BGT).** Green space and water were fetched from the BGT (Basisregistratie Grootschalige Topografie) via the PDOK OGC API Features endpoint with automatic pagination. Two feature types were collected: `groenVoorziening` (maintained green infrastructure) and `bos` (forest and woodland). Water bodies were fetched as BGT `waterdeel`. BGT was preferred over OSM because it carries 20 cm positional accuracy and is the legally authoritative source; OSM was used as a fallback.
+
+**Yuexiu - green space, water, and roads (OSM).** All vector layers were fetched from OpenStreetMap via the Overpass API using the `leisure=`, `landuse=`, `natural=`, and `waterway=` tags. Road networks for both cities were fetched using the `highway=` tag.
+
+Retained tag attributes: `leisure`, `landuse`, `natural`, `waterway`, `highway`, `name`, `surface`.
+
+#### Step 3 - Raster layers
+
+| Layer | Cities | Resolution | Source |
+|---|---|---|---|
+| WorldPop | Both | 100 m | worldpop.org |
+| Sentinel-2 NDVI | Both | 10 m | Google Earth Engine |
+| ESA WorldCover | Both | 10 m | AWS S3 COG tiles |
+| VIIRS VNP46A4 | Yuexiu only | ~500 m | NASA Earthdata |
+| Green space mask | Yuexiu only | 10 m | Derived from WorldCover + NDVI |
+
+NDVI was computed per image as $(B8 - B4) / (B8 + B4)$ and reduced to a pixel-wise median. The Yuexiu green space mask retained tree cover (class 10) and grassland (class 30) pixels, further filtered by NDVI > 0.3. VIIRS nighttime light radiance served as a socioeconomic proxy for Yuexiu, where direct income data are not publicly available.
+
+#### Step 4 - Biodiversity occurrences (GBIF)
+
+Species occurrence records were fetched from the GBIF REST API (`occurrence/search`) for each city bounding box, in pages of 300 up to a maximum of 5,000 records per city. Filters applied: `basisOfRecord = HUMAN_OBSERVATION`, valid decimal coordinates, and `coordinateUncertaintyInMeters ≤ 1,000 m`. Raw JSON was cached locally to avoid repeat API calls.
+
+#### Step 5 - Socioeconomic data
+
+**Delft.** Neighbourhood-level income data were fetched from CBS StatLine OData API (table `85163NED`), filtered to Delft buurt codes (`BU0503*`), and joined to CBS buurt boundary polygons. Two buurten with suppressed disclosure values were excluded from income correlation analysis.
+
+**Yuexiu.** Mean, median, and standard deviation of VIIRS nighttime light radiance were computed per zone polygon and saved as `guangzhou_viirs_zonal.csv`.
+
+#### Step 6 - Clip and reproject
+
+All raw layers were clipped to the city AOI and reprojected to a metric CRS:
+
+| City | CRS | Authority |
+|---|---|---|
+| Delft | EPSG:28992 - Amersfoort / RD New | Dutch national grid |
+| Yuexiu | EPSG:4547 - CGCS2000 / Gauss-Krüger zone 20 | Chinese national grid |
+
+Vectors were clipped with `geopandas.clip`; rasters were masked with `rasterio.mask` and reprojected with `rasterio.warp.reproject`, using bilinear resampling for continuous rasters and nearest-neighbour for categorical rasters. All projected outputs were saved with a `_proj` suffix.
+
+#### Step 7 - Validation audit
+
+A validation audit was run on all projected layers before analysis, checking for correct CRS, valid geometries, bounding box overlap with the AOI, raster coverage > 50% valid pixels, and key attribute completeness ≥ 80% non-null. Results were written to `validate_delft.json` and `validate_guangzhou.json`. Any layer failing a check was flagged before analysis proceeded.
+
+---
+
+### Stage II - Thematic Analysis
+
+All analyses were conducted in R from the processed layers produced in Stage I, following the pipeline illustrated in @fig-analytical-pipeline. The pipeline is implemented in six sequential scripts (`00_config.R` through `06_mcda_nbs.R`), each reading GeoPackage and GeoTIFF inputs from the project data folder and writing intermediate RDS objects to `outputs/`. All spatial operations use the city-specific metric CRS throughout; reprojection to EPSG:4326 is applied only for raster extraction via `exact_extract()`.
+
+```{r}
+#| label: fig-analytical-pipeline
+#| fig-cap: "Analytical pipeline for urban green space quality assessment across Delft and Yuexiu, structured around five sub-research questions and integrated through a weighted MCDA synthesis."
+#| fig-align: center
+#| out-width: "100%"
+knitr::include_graphics(file.path(OUT_ROOT, "analysis_methodology.png"))
+```
+
+Two global decisions apply across all scripts: the S2 geometry engine is disabled (`sf_use_s2(FALSE)`) in favour of planar GEOS operations, and `st_make_valid()` is applied to all polygon layers before any spatial operation. Green patches smaller than **0.1 ha** are dropped for both cities prior to analysis fragments below this threshold are too small to provide measurable ecosystem services.
+
+
+**Data quality filter.** Yuexiu subdistrict polygons include 9 non-residential units carrying WorldPop floor values (`pop_count = 1`, identified via a hard discontinuity in sorted population; the next real value jumps to 28,253). These carry zero green area and produce spurious scores. Nine Yuexiu subdistrict polygons carried WorldPop floor values (`pop_count = 1`), identified via a hard discontinuity in sorted population — the next real value jumps to 28,253, producing zero green area and spurious scores. All equity and MCDA analyses therefore apply a `pop_count ≥ 100` filter, retaining 18 of 27 Yuexiu subdistricts and all 13 Delft wijken. Delft equivalent artefacts were excluded upstream via the `GM0503` gemeentecode filter in script 01.
+
+**Connectivity sub-score.** Patch degree (connection count) is used in the MCDA 
+rather than betweenness centrality, because >75% of patches in both cities have 
+betweenness ≈ 0 - insufficient variation to drive meaningful differentiation. 
+Degree provides a more sensitive signal at the 150 m dispersal threshold. Both 
+cities score approximately 0.81–0.82 on connectivity urgency, meaning this 
+criterion contributes limited differentiation to the MCDA composite.
+
+**MCDA normalisation scope.** All sub-scores are normalised within each city 
+independently via min-max scaling. Composite scores are therefore not directly 
+comparable across cities; city-level means reflect relative internal profiles only.
+
+---
+
+#### SQ1 - Accessibility
+
+Four metrics are computed per administrative unit using WorldPop 100 m population aggregated via `exact_extract()`.
+
+**Green space per capita.** Total green area (m²) within each admin polygon, divided by WorldPop population count. Green patches are pre-unioned via `st_union()` before intersection to avoid double-counting. Units: m² per person.
+
+**Walking-distance buffer coverage.** Euclidean buffers of **300 m** (WHO-aligned maximum comfortable walking distance) and **500 m** applied to all green patches in metric CRS, clipped to the city boundary. Metric: share of total city population falling within each buffer, reported as a single city-level scalar.
+
+**Mean nearest green space distance.** Straight-line distance from each admin unit centroid to the nearest green patch centroid, computed via `st_nearest_feature()` + `st_distance()` in metric CRS.
+
+**Road network entry analysis.** Road segments filtered to navigable types (primary, secondary, tertiary, residential, living_street, unclassified, service, pedestrian, cycleway, footway). A **−10 m** inward buffer excludes roads inside the green core; a **3 m** outward buffer on green boundaries identifies entry interface segments. Entry segments are centroided and dissolved at **35 m** clusters to produce deduplicated access point locations, visualised alongside 300 m walking buffers.
+
+---
+
+#### SQ2 - Ecological Quality
+
+**Green space typology.** Every green polygon classified into one of eight classes via `classify_green_type()`, using BGT `fysiek_voorkomen` for Delft and OSM `leisure` / `landuse` / `natural` tags for Yuexiu. Three classes are excluded from all subsequent analyses: Agriculture, Cemetery, and Sports Facility. Five classes are retained: Park/Recreation, Forest/Woodland, Grass/Meadow, Nature Reserve/Scrub, and Allotment Garden.
+
+**NDVI.** Sentinel-2 10 m cloud-free median composite (produced in Stage I via GEE) extracted per green patch and per admin unit using `terra::extract()`. A geometry scrubber (`scrub_sf()`) is applied before extraction: empty geometries dropped, `st_make_valid()` + zero-distance buffer, GEOMETRYCOLLECTION objects split to polygon parts, zero-area polygons removed. Metrics stored: `ndvi_mean`, `ndvi_sd` per patch; `ndvi_mean`, `ndvi_p25`, `ndvi_p75` per admin unit. The per-admin NDVI mean is used as the ecological quality proxy in the MCDA.
+
+**Species observation density.** GBIF occurrence points joined to green patches via `st_intersects()`. Density computed as observations per hectare (`gbif_obs_per_ha`), floored at area = 0.01 ha to avoid division by zero. Plotted against patch area on a log–log scale:
+
+$$\log(\text{Area}) \quad \text{vs.} \quad \log\left(\frac{\text{Observations}}{\text{Area}}\right)$$
+
+**Blue-green balance.** Green area and water area clipped to each admin polygon via `st_intersection()`. For Yuexiu, linear water features are buffered **5 m** and unioned with water polygons before intersection; for Delft, BGT water polygons are used directly. Per-capita values computed (`green_pc_m2`, `water_pc_m2`); balance index:
+
+$$\text{BGI} = \log(1 + \text{water}_{pc}) - \log(1 + \text{green}_{pc})$$
+
+Positive values indicate water-dominant zones; negative values indicate green-dominant zones. `log1p()` suppresses extreme per-capita outliers. Admin units with missing population default to pop = 1 (flagged in log).
+
+---
+
+#### SQ3 - Spatial Justice
+
+Admin units with `pop_count < 100` are excluded from all equity analyses. WorldPop returns near-zero floor values (~1) for non-residential zones; Yuexiu's next value above 1 jumps to 28,253, confirming this threshold is appropriate.
+
+**Gini coefficient.** Computed on `green_pc_m2` per admin unit using the weighted rank-sum formula:
+
+$$G = \frac{2 \cdot \sum(\text{rank} \times \text{value})}{n \cdot \sum(\text{value})} - \frac{n+1}{n}$$
+
+Lorenz curve: cumulative population share (x) vs. cumulative green space share (y), both normalised to [0, 1].
+
+**Bivariate choropleth.** Green density (`green_m2 / admin_m2`) and population density (`pop_count / area_ha`) each classified independently into tertiles via `quantile(x, probs = c(0, 1/3, 2/3, 1))`. Nine bivariate classes produced by combining tertile labels (e.g. `Low-High`). The `Low-High` class (low green density, high population density) represents the highest equity concern.
+
+**Income correlation.** Pearson r between `green_pc_m2` and a socioeconomic proxy: CBS StatLine mean disposable income per resident (table `85163NED`, variable `gemiddeldInkomenPerInwoner`) for Delft; VIIRS VNP46A4 annual mean nighttime light radiance (nW/cm²/sr) as proxy for Yuexiu, where subdistrict income data are unavailable. Two Delft wijken with suppressed CBS income (Delftse Hout, Abtswoude - park/polder zones) are excluded from the correlation.
+
+---
+
+#### SQ4 - Connectivity
+
+**Fragmentation indices.** Three landscape metrics computed from green patch vectors:
+
+| Metric | Abbreviation | Computation |
+|---|---|---|
+| Number of patches | NP | Row count after patch filter |
+| Mean patch size | MPS (ha) | `mean(area_ha)` across all patches |
+| Euclidean nearest neighbour | ENN (m) | Centroid-to-centroid distance matrix; diagonal set to NA; row minimum; then mean across patches |
+
+**Functional connectivity graph.** Nodes: green patch centroids. Edges: all patch pairs with centroid distance ≤ **150 m** (reflecting typical dispersal range of urban birds and seed vectors), computed via `st_distance()`. Patch degree is used in the MCDA rather than betweenness centrality, as >75% of patches in both cities have betweenness ≈ 0, providing insufficient variation to drive meaningful differentiation. Metrics computed per patch: degree (connection count), normalised betweenness centrality (`igraph::betweenness(g, normalized = TRUE)`). Connected components identified via BFS traversal. Isolated patches defined as ENN > 150 m - no neighbour within the dispersal threshold.
+
+---
+
+#### SQ5 - MCDA and NbS Prioritisation
+
+**Normalisation.** All sub-scores normalised to [0, 1] via min-max scaling: $s = (x - \min) / (\max - \min)$. If max = min (no variation), all units assigned 0.5. Inversion applied where lower raw value = higher intervention urgency.
+
+**Sub-score construction.**
+
+| Sub-score | Weight | Input | Direction |
+|---|---|---|---|
+| Accessibility | 30% | Mean of normalised `green_pc_m2` (inverted) and `nearest_green_m` | Low coverage / high distance = high urgency |
+| Ecological quality | 25% | `ndvi_mean` per admin unit | Inverted - high NDVI = lower urgency |
+| Connectivity | 25% | Mean patch degree within admin unit | Inverted - low degree = high urgency. Degree used over betweenness: >75% of patches have betweenness ≈ 0, insufficient variation |
+| Spatial justice | 20% | Bivariate class pre-assigned urgency score | `Low-High` = 1.00 → `High-Low` = 0.10 |
+
+**Composite and priority tiers.**
+
+$$\text{MCDA} = 0.30 \cdot S_{\text{access}} + 0.25 \cdot S_{\text{bio}} + 0.25 \cdot S_{\text{conn}} + 0.20 \cdot S_{\text{equity}}$$
+
+Priority tiers assigned by tertile thresholds within each city: High (≥ 67th percentile), Medium (33rd–67th), Low (< 33rd percentile). Robustness tested by ±10% perturbation of each criterion weight.
+
+**NbS corridor identification.** For each isolated patch (ENN > 150 m), the nearest connected patch centroid (ENN ≤ 150 m) is identified and a straight LINESTRING drawn between them, representing the gap a corridor intervention (e.g. street tree planting, green roof linkage) should bridge. Corridors attributed with source patch area (ha) and gap distance (m). Output overlaid with High-priority admin units to produce the final NbS intervention map.
+
 
 ## Results
 
+### 1. Accessibility
+
+In order to assess accessibility to urban green spaces accordingly, first Yuexiu and Delft need to be contextualised according to their population densities. As shown in @fig-density, Yuexiu has a much higher population density than Delft across almost all administrative units. Delft shows a more varied and generally lower-density pattern, while Yuexiu is characterised by a homogenous high density, this reflects its position as urban core of Guangzhou.
+
+```{r}
+#| label: fig-density
+#| fig-cap: "Population density map"
+knitr::include_graphics(file.path(OUT_ROOT, "fig_population_density.png"))
+```
+
+This density difference is important for interpreting the green space per capita results. @fig-access shows green space per capita is higher in Delft, and more evenly distributed across the city. In Yuexiu, values remain low in most jiedao, despite the presence of several larger green patches. This suggests that Yuexiu's high population density places much greater pressure on available urban green space. However, the amount of green space per person depends not only on the surface amount presence of green areas, but also on the number of residents sharing them. There could be an equal amount of green surface area, but if density is higher, more residents share it, which brings the number of green space per capita down. Therefore, with much higher population density of Yuexiu (25,000/km²) in comparison to Delft (4,856/km²), the lower green space per capita in Yuexiu can not be interpreted as a lack of green space, but should be considered as a result of a much higher number of residents sharing an amount of accessible greenery.
+
+Moreover, the data reveals a large discrepancy in green space-per-capita ratio, with scale peaking to 400 m²/person in Delft, compared to merely 10 m²/person in Yuexiu. This is a 40 times fold difference in the upper scale bound. To make up for this large disparity, the visualization utilizes a uniform pseudo-log scale to compress the higher range while expanding the lower range, thus resulting in a more meaningful comparison between the two cities @fig-access.
+
+```{r}
+#| label: fig-access
+#| fig-cap: "Green space per capita map"
+knitr::include_graphics(file.path(OUT_ROOT, "fig_access_per_capita.png"))
+```
+
+The buffer analysis confirms the previous mentioned pattern. @fig-buffer shows that almost the entire population of Delft is within a 300m access area surrounding green space, and most certainly within 500m access. Delft's scale tops at \~200m, even the worst-served wijk is close by Yuexiu standards. Yuexiu has one neighbourhood reaching 600m+ (the black patch in the northwest, same outlier as the blue-green ratio map, which had zero green space). The central strip of the high distance of neighbourhood to green space on the Delft map, corresponds to the rail corridor where green space is sparse.Yuexiu performs worse on accessibility equality, especially at the 300m treshold, although accessibility improves considerably at 500m. This indicated that green space in Yuexiu is not necessarily absent, but that it is less available within short walking distance for a large share of the population, meaning the population within certain neighbourhoods has to travel to reach a green space.
+
+```{r}
+#| label: fig-buffer
+#| fig-cap: "Buffer coverage percentage"
+knitr::include_graphics(file.path(OUT_ROOT, "fig_buffer_coverage.png"))
+```
+
+While both cities do not exhibit large disparity in accessibility to green space within each city, the between-city differences is more apparent evident in their maximum distance metrics @fig-meandist. This is also supported by the normalized walking distance to green space difference between the two cities on @fig-buffer.
+
+```{r}
+#| label: fig-meandist
+#| fig-cap: "Mean Distance to the nearest green space"
+knitr::include_graphics(file.path(OUT_ROOT, "fig_nearest_green_distance.png"))
+```
+
+Finally, the network analysis presented on @fig-network displays assumed access points of parks from road network, through intersecting a 3m green area buffer with road networks. Access points, visualized in red dots, reveal a starking difference between the two cities. Within a 300m buffer, approximating to 3 to 4 minutes of walking, residents of Yuexiu historic district are able reach access points to green areas. In contrast to Yuexiu, Delft reveals a different spatial pattern, with more access points and its green spaces that are distributed more evenly across the city. The widespread availability of green spaces is seen by its higher degree of buffer overlap, covering almost the entire city of Delft - that is different compared to Yuexiu, exhibiting more sparse distribution of urban green spaces.
+
+```{r}
+#| label: fig-network
+#| fig-cap: "Access Points identification via Network Buffer Intersection"
+knitr::include_graphics(file.path(OUT_ROOT, "fig_network_walk_access.png"))
+```
+
+These results conclude a different accessibility structure, where Yuexiu depends more on larger green spaces and travel time, whereas Delft benefits from a more equally distributed green space network, consisting out of smaller patches. Delft performs better in terms of green space availability and walking-distance access, and due to its lesser density, its urban green space is less pressurised.
+
+### 2. Ecological Quality
+
+To gain insight on the ecological characteristics and condition of urban green spaces, this "ecological quality" is assessed through the composition of urban green space typologies, vegetation condition (NDVI), biodiversity observations, and, to contextualise, the balance between green and blue infrastructure. The blue-green balance needs to be assessed since it can influence the interpretation of the analyses. While this study focuses on green infrastructure, incorporating blue-infrastructure analyses could be a valuable asset to the methodology.
+
+@fig-green_typology illustrates the composition of urban green spaces based on OpenStreetMap land-use classifications. There is a filter applied in the data, so only the publicly accessible green spaces are taken into consideration. The two study areas show different green space compositions. Yuexiu is primarily composed of park and recreational green spaces, while Delft is dominated by grassland and meadow typologies. This difference reflects the contrasting urban contexts; delft being a medium-sized Dutch city, with a greater proportion of informal green areas distributed throughout the urban fabric, while Yuexiu's green space is largely concentrated in formal public parks that serve a dense population. This comes from the different municipal UGS strategies that have been implemented (see Introduction - Study Sites).
+
+```{r}
+#| label: fig-green_typology
+#| fig-cap: "Spatial Composition of Urban Green Typologies"
+knitr::include_graphics(file.path(OUT_ROOT, "fig_green_typology.png"))
+
+```
+
+The Normalised Difference Vegetation Index (NDVI) is a remote sensing metric used to measure and quantify the health, density and greenness of vegetation. @fig-ndvi-spatial shows that Delft has higher mean NDVI values than Yuexiu. Delft's neighborhoods have relatively higher NDVI (high NDVI ≈ 0.7–0.8) and the highest values are concentrated in the southern neighbourhoods of Delft and one up north-east, while lower values occur closer to the historical city centre. Yuexiu displays a similar spatial pattern, with a low to mid-mean NDVI level (NDVI ≈ 0.2–0.6), indicating sparse vegetation overall. It similarly to Delft shows lower NDVI scores in the historical centre and higher NDVI values observed around the northern neighborhoods. Both show the oldest historical cores, which are mostly protected heritage, to have the lowest NDVI scores, which implies there is less freedom for implementing urban green spaces. Overall, the results indicate that vegetation in Delft is generally denser or healthier than in Yuexiu.
+
+```{r}
+#| label: fig-ndvi-spatial
+#| fig-cap: "NDVI Spatial Distribution and Zonal Means"
+knitr::include_graphics(file.path(OUT_ROOT, "fig_ndvi_zonal.png"))
+```
+
+These differences between green space typologies become clearer in the NDVI violin plots, see @fig-ndvi-violin. Although at first looking similar, across most typologies, Yuexiu shows lower NDVI values than Delft consistently. Forest and woodland patches in Delft show particularly high and relatively consistent vegetation conditions, while park and recreation areas also maintain high NDVI values. In Yuexiu, the vegetation condition varies more strongly within several typologies, particularly within park and recreational areas. This could be indicating good maintenance of urban green areas for narrow/pointy plots, and second, high variance in NDVI value across parks, could suggest possible differences in prioritisation of maintenance of different green areas. The results suggests ecological quality is more heterogeneous across Yuexiu's green spaces, whereas Delft's vegetation condition is more consistent.
+
+```{r}
+#| label: fig-ndvi-violin
+#| fig-cap: "NDVI Violin"
+knitr::include_graphics(file.path(OUT_ROOT, "fig_ndvi_violin.png"))
+```
+
+Biodiversity observations were analysed using GBIF occurence records normalised by patch area, see @fig-gbif. The results show that smaller green patches generally contain higher numbers of recorded observations per hectare, while larger patches exhibit lower observation densities. This phenomenon can also be known as sampling artefact, where more observations are gathered in well-surveyed community sites as community gather near entrances, and not necessarily due to richer biodiversity. A second observation reveals the cluster of high patch area (\>10 ha) found in Yuexiu found to have low number of observations. While it can be attributed to the previous phenomenon, it may also indicate under sampling of the larger green spaces, thus, instead of reflecting low ecological biodiversity, the recorded data is more likely to under-represent their true biodiversity. This pattern should be interpreted with caution, as GBIF records represent observation effort rather than actual biodiversity. Consequently, the figure is better interpreted as representing the spatial distribution of biodiversity observations rather than ecological richness itself.
+
+```{r}
+#| label: fig-gbif
+#| fig-cap: "GBIF density"
+knitr::include_graphics(file.path(OUT_ROOT, "fig_gbif_density.png"))
+```
+
+@fig-bluegreen presents the blue-green balance, calculated by \$\\text{blue-green balance} = \\log(1 + \\text{water per capita}) - \\log(1 + \\text{green per capita})\$ reveal higher abundance of blue space (water) if dominated by positive values, higher abundance of green space if dominated by negative values. Values close to 0 indicate a balanced amount of blue and green infrastructure. Comparing the two cities, the range in comparison for Yuexiu suggests much higher green space presence in comparison to water bodies. This is validated by summary statistics between total water vs green, in which Yuexiu yielded 192,494m^2^ of mean green space compared to 40,304m^2^ of mean water space. In comparison, Delft yielded a more evenly spread balance between green and blue areas; akin to its canal-rich characteristic, thus reflecting its water-city heritage. The relevance extends as blue and green infratsructure together, can provide better cooling and biodiversity than either alone (@akther2026bgi). This is considered a limitation for now, but, as suggested before, future research would benefit to relate the green-blue ratio with cooling and biodiversity, and further explore this relationship.
+
+```{r}
+#| label: fig-bluegreen
+#| fig-cap: "Blue-green ratio"
+knitr::include_graphics(file.path(OUT_ROOT, "fig_blue_green_ratio.png"))
+```
+
+Overall, Delft demonstrated a more consistent ecological condition, and is characterised by higher vegetation greenness and a better blue-green balance. Yuexiu, on the other hand, relies mainly on formal urban parks and shows a greater variation in vegetation condition across its green spaces. The indicators suggest that ecological quality is generally more consistent in Delft, while Yuexiu shows greater ecological heterogeneity.
+
+### 3. Spatial Justice
+
+Spatial justice is assessed by evaluating the relationship between green space distribution and socio-economic conditions, population density, accessibility, and green space inequality. Tis analysis provides insight into wether urban green spaces are distributed equitably across neighbourhoods.
+
+The relationship between green space per capita and socio-economic status is presented in @fig-equity-correlations. Because spatial income data were unavailable for Yuexiu, VIIRS night-time light intensity has been used as a proxy for economic activity. Studies (@unlit and @unlit2) have shown that night-time light (VIIRS) can serve as a reliable proxy for assessing the economic development of specific regions. As for the Netherlands, where data are available on income per neighbourhood (Delft: CBS disposable income), the direct metric is used instead. The equity correlation shown in @fig-equity-correlations indicates that both cities have weak correlations between socio-economic status and green space per capita. These proxies are not equivalent metrics and the correlation results are therefore not directly comparable across cities; this should be treated as a soft exploratory finding. The correlation is r = −0.082 (n = 11) for Delft and r = −0.116 (n = 18) for Yuexiu. Both exhibit negative, near-zero values, suggesting little to no significant trend of green spaces favouring wealthier sub-districts or neighbourhoods in the two locations. Green space availability therefore appears largely independent of wealth in both study areas. Given that the two cities use different proxies  CBS disposable income for Delft and VIIRS nighttime light radiance for Yuexiu and that the Delft sample is small (n = 11), this should be treated as a soft exploratory finding rather than a strong equity conclusion.
+
+```{r}
+#| label: fig-equity-correlations
+#| fig-cap: "Equity correlations"
+
+knitr::include_graphics(file.path(OUT_ROOT, "fig_equity_correlations.png"))
+```
+
+The spatial relationship between population density and green space density is further explored in the bivariate choropleth, see @fig-bivariate-choropleth. The bivariate choropleth displays the interaction between a demographic factor of population density and an environmental factor of green density. Between the two cities, Delft reveals a more balanced spatial transition; a steady balance between areas dominated by high green density with low population (green) and zones characterized by high population density with limited greenery (pink). Yuexiu does not display this characteristic; instead, it reveals a less uniformal transition of greenery-population density balance across its neighborhoods. This suggests that, while Delft’s green-population dynamic is more structural, Yuexiu’s landscape is the result of uneven, rapid growth where an increase in residential density may have outpaced the provision of ecological infrastructure in the urban fabric, this is backed by Introduction - Study Sites. This indicates that the distribution of urban green space is, spatially seen, less consistent across Yuexiu than across Delft.
+
+```{r}
+#| label: fig-bivariate-choropleth
+#| fig-cap: "Bivariate Choropleth. Note: three cells absent in Delft (Mid-Low, High-Mid, High-High) reflect data distribution, not a rendering error."
+knitr::include_graphics(file.path(OUT_ROOT, "fig_bivariate_choropleth.png"))
+```
+
+Lastly, spatial justice is examined by comparing the behavior of the Lorenz curves and corresponding Gini coefficients of the two cities, see @fig-gini-coeff. The dotted diagonal grey line represents 0; a state of perfect equality where green space would have been equally distributed among all its neighborhoods, and 1 representing maximum inequality. Delft (Gini coefficient = 0.598) shows a more equal distribution of green space across the city compared to Yuexiu (Gini coefficient = 0.742). This can be attributed back to the spatial distribution shown on the map of @fig-bivariate-choropleth, displaying how the inequality exists (while being relative to population density), or more simply @fig-access on green space per capita.
+
+```{r}
+#| label: fig-gini-coeff
+#| fig-cap: "Gini Coefficient comparison"
+
+knitr::include_graphics(file.path(OUT_ROOT, "fig_lorenz_gini.png"))
+```
+
+Delft performs better in terms of spatial justice, with a more balanced distribution of green space across neighbourhoods and lower inequality between administrative units. Yuexiu (despite containing several large urban parks) exhibits larger disparities in green space availability, particularly within its dense historical urban fabric.
+
+### 4. Connectivity
+
+Connectivity is assessed through the spatial arrangement of green patches, using Euclidean nearest-neighbour distances, fragmentation metrcis, and graph-based network analysis. The indicators evaluate the extent to which urban green spaces function as an interconnected ecological network, and where possible interventions logically can take place. @fig-eucl shows the distribution of Euclidean nearest-neighbour distances between green patches relative to the 150 m dispersal threshold used in this analysis. This indicate high connectivity, which is based on low distance traveled between one green patch to another. However, this is not the case in Yuexiu, where green patches are located further away from each other, with the majority exceeding the 150 m dispersal threshold. This confirms that green spaces in Yuexiu are more spatially isolated and therefore less likely to function as a continuous ecological network. This could be argued to contrast with the implemented municipal strategies as described in Introduction - Study Sites.
+
+```{r}
+#| label: fig-eucl
+#| fig-cap: "Eucladian Nearest Neighbour Distance"
+#| 
+knitr::include_graphics(file.path(OUT_ROOT, "fig_enn_distribution.png"))
+```
+
+The fragmentation metrics presented in @fig-fragm support this observation. It reveals that, while Delft has much higher number of patches, the distance between its patches is subsequenly lower than those in Yuexiu. However, this high number of patches is followed by its patch size, which is not very large. This is the opposite case when compared to Yuexiu, where, while the number of patches is much lower and distance in between patches is much further away in comparison to Delft, the size of each patch (as shown by the percentage of patches exceeding 1 ha and mean patch size (in ha)) is much larger compared to Delft: more than 30% of Yuexiu's patches exceed one hectare, in Delft this is less than 10%. This implies that while Delft focuses more on better well-connected green patches across the city, Yuexiu may focus more on providing large green spaces as leisure than that of connectivity, but could still be operating succesfully as a continuous green network when assessed on a much larger scale, such as the entire municipality of Guangzhou.
+
+```{r}
+#| label: fig-fragm
+#| fig-cap: "Fragmentation metrics"
+#| 
+knitr::include_graphics(file.path(OUT_ROOT, "fig_fragmentation_metrics.png"))
+```
+
+The @fig-connectmaps visualises UGS as a functional network. Green patches were represented as nodes, while potential dispersal links were created between patches located within the 150 m threshold. The edges then serve as potential corridors that enable the movement of species and/or humans between the otherwise green patches. Thus, areas with the fewest red lines/edges indicate where the weakest links are, due to their close proximity to other green areas. At the 150 m dispersal threshold, Delft produces 37,936 edges across 4,039 patches, with two dominant connected components of 1,356 and 1,034 patches respectively. Yuexiu produces only 42 edges across 114 patches, yielding 83 isolated components, the largest containing just 7 patches. In contrast to Delft's highly connected network, Yuexiu reveals almost no functional connectivity through green corridors. This finding is consistent with the previous @fig-fragm, where green patches in Yuexiu may be farther apart than in Delft, where green patches are closer together yet smaller. Despite the lack of potential corridors in Yuexiu, the city's larger green patches still offer potential for connectivity. These results suggest that improving UGS connectivity in Yuexiu would require strengthening connections between existing parks, spanning large areas, whereas Delft already possesses a relatively continuous green network: having smaller distances between UGS makes it easier to implement continuous connections.
+
+```{r}
+#| label: fig-connectmaps
+#| fig-cap: "Green patch connectivity maps for Yuexiu and Delft"
+#| 
+knitr::include_graphics(file.path(OUT_ROOT, "fig_connectivity_maps.png"))
+```
+
+The @fig-betweenness examines the relationship between patch size and betweenness centrality. Betweenness centrality identifies green patches that function as important stepping stones within the network by connecting otherwise separated parts of the system. In Delft, several relatively small patches show high betweenness values, indicating that small green spaces can play an important role in maintaining connectivity. Yuexiu shows betweenness values of approximately zero across all 114 patches, including its largest parks. This is not a data issue but the substantive finding: with 83 isolated components and only 42 edges, there are no paths between patches for betweenness to measure. Yuexiu has no functional network to route through.
+
+```{r}
+#| label: fig-betweenness
+#| fig-cap: "Patch area versus normalised betweenness centrality for Yuexiu and Delft"
+knitr::include_graphics(file.path(OUT_ROOT, "fig_betweenness_vs_area.png"))
+```
+
+The connectivity analysis reveals two contrasting green space structures: Delft being characterised by a dense network of many small, close green patches that together create a highly connected urban green system, and Yuexiu relying on fewer, substantially larger parks, which provide important ecological areas, but remain relatively isolated from one another. As a result, improving connectivity in Yuexiu would likely depend on creating additional intermediate green spaces or ecological stepping stones between existing parks. Strategies such as implementing vertical green or green roofs provide a solution.
+
+### 5. MCDA
+
+The Spatial Multi-Criteria Decision Analysis (S-MCDA) combines the four assessment dimensions (accessibility, ecological quality, spatial justice, connectivity) into a single composite intervention priority score. The criteria are weighed according to their relative importance within the study, with accessibility (30%) receiving the greatest weight, followed by ecological equality and connectivity, both with 25%, and spatial justice with 20%. Higher scores indicate neighbourhoods where interventions are expected to have the greatest potential to improve the urban green space network.
+
+Accessibility receives the highest weight (30%) as the most directly measurable indicator of green space service delivery to residents and the primary focus of this study's equity lens. Ecological quality and connectivity are weighted equally (25% each) as complementary ecological criteria. Vegetation health serves as a proxy for ecosystem condition, and structural connectivity is critical to NbS effectiveness. Spatial justice receives the lowest weight (20%) as it is partly captured by the accessibility score, which already reflects distributional patterns across administrative units.
+
+@fig-mcdamap visualizes normalised intervention urgency (0–1), where dark green indicates low urgency and dark red indicates high urgency. In Yuexiu, six subdistricts are identified as high priority: Kuangquan (northwest, composite 0.83, accessibility-led), and the south-central cluster of Zhuguang, Guangta, Dadong, Jianshe, and Baiyun (equity and connectivity-led). In Delft, four wijken are identified as high priority: Binnenstad (composite 0.95, the strongest priority in the entire dataset), Vrijenbaan, Voorhof, and Hof van Delft. Both cities show highest urgency in their historical cores. These findings align with @fig-meandist, which reveals these neighborhoods are isolated from other existing green patches, and, as observed in the other analyses, the overall low amount of green space in both neighbourhoods. Moreover, assigning higher priority to these areas is justified as there is a need for spatial equality to be addressed, consequently fostering better connectivity in the broader urban network.
+
+```{r}
+#| label: fig-mcdamap
+#| fig-cap: "MCDA map. Legend scales are normalised independently within each city and are not directly comparable across panels."
+knitr::include_graphics(file.path(OUT_ROOT, "fig_mcda_maps.png"))
+
+```
+
+For each of the four criteria, the city-wide mean of the normalised urgency scores is calculated and displayed on @fig-mcdaradar. A higher bar indicate greater average urgency compared to other dimensions. In both cities, connectivity poses higher relative urgency compared to other dimensions. This is opposed to spatial justice, which shows the lowest need for intervention. This is an interesting observation as connectivity is both central to the discussion of nature-based solution and efforts that have seemed to been made to ensure connectivity of green patches in Delft. However, it still seems to need most urgent care compared to other metrics. The findings suggest there is a need for explicit connectivity effort through establishment of green corridors between green patches in both cities as part of further effort to the study its focus; nature-based solutions.
+
+```{r}
+#| label: fig-mcdaradar
+#| fig-cap: "City-mean MCDA sub-scores by criterion for Yuexiu and Delft"
+knitr::include_graphics(file.path(OUT_ROOT, "fig_mcda_radar.png"))
+```
+
+The priority tier (@fig-prioritytiers) divides the range of tiers equally to three groups (tertile classification). This is a choice of classification, which does not aim to exactly set 33% of a city to genuinely needs more urgent intervention as our choice of normalization also does not take into account the within group value difference to really determine the amount of urgent care actually required. Consistent with previous figures, Yuexiu's high priority zones are scattered, reflecting more fragmented planning scheme in terms of urban green infrastructure, compared to Delft where its high-priority zones are more concentrated, that may suggest a more underlying systematic issue around the area.
+
+```{r}
+#| label: fig-prioritytiers
+#| fig-cap: "NbS intervention priority tiers (High / Medium / Low) for Yuexiu and Delft"
+knitr::include_graphics(file.path(OUT_ROOT, "fig_priority_tiers.png"))
+```
+
+Finally, @fig-nbscorridors combines the MCDA priority areas with isolated green patches as identified in the connectivity analysis. This overlay of the two layers results in an efficiently identifiable locator in direct correspondance to provide in nature based solutions (here, green corridors). As seen from the (@fig-nbscorridors), Yuexiu exhibits much more need for green corridors compared to Delft. This finding is consistent as also with Yuexiu's fragmented green patches across the city; consequently, more interventions are needed to establish functional connectivity between these isolated sites.
+
+```{r}
+#| label: fig-nbscorridors 
+#| fig-cap: "Suggestion for green corridors" 
+#| 
+knitr::include_graphics(file.path(OUT_ROOT, "fig_nbs_corridors.png"))
+```
+
+Overall, the MCDA integrates the individual analyses into a single decision support framework. Rather than identifying the one city as better performing, it highlights where interventions and which interventions are likely to achieve the best improvements within each urban context. The results provide a spatial basis for prioritising nature-based solutions while acknowledging that appropriate interventions could and should differ between different urban contexts.
+
 ## Discussion
+
+### Limitations
+
+Few limitations have been identified in accordance to the used data sources. First, most of the datasets come from OSM, its data completeness, however, differs between Yuexiu, Guangzhou and Delft. The Netherlands as OSM's volunteer-based system is more dominant in Western European cities compared to Chinese cities. This means that the data which is gathered is not the most up-to-date nor accurate, and could be biased. Moreover, the language barrier in accessing chinese dataset makes it more difficult to perform a direct comparison between the two cities, especially regarding the spatial justice analysis. Here, instead of using income per sub-district data, our methodology had to rely on an alternative method; the VIIRS night-light data as a proxy to economic development was used instead of actual income related numbers. While literature supports the link between VIIRS night-light data as economic proxy for development, this still does not provide a fully correct comparison between the two cities. Furthermore, GBIF observations from the ecological quality section may contain sampling bias, as the Chinese dataset are much more up to date in comparison to the Delft dataset. Due to this sampling bias, interpretation becomes less meaningful. In obtaining the datasets, there was an awareness of the temporal effect if data gathered was to be obtained in different seasons. For example, the comparison would not be less meaningful if NDVI for Delft and Yuexiu were obtained during a different seasons.
+
+Additional limitations relate to specific analytical decisions.
+
+**WorldPop floor artifacts.** Nine Yuexiu subdistrict polygons carried `pop_count = 1` placeholder values from WorldPop, producing two fabricated high-priority subdistricts (Binjiang, Liede) in an initial analysis run. These were identified via a hard discontinuity in the sorted population distribution and excluded via a `pop_count ≥ 100` filter applied consistently across scripts 04 and 06.
+
+**Connectivity score compression.** Both cities score ~0.81–0.82 on connectivity urgency, meaning this criterion contributes limited differentiation to the MCDA composite. The degree-based measure collapses to near-maximum for most administrative units. A continuous dispersal kernel or area-weighted betweenness centrality would produce more sensitive differentiation in future work.
+
+**GBIF recording bias.** GBIF observation density reflects recording effort as much as actual biodiversity. Well-known urban parks in Yuexiu attract disproportionate citizen science activity, producing high obs/ha values that overstate biodiversity relative to less-visited patches. This metric should be interpreted as a relative spatial indicator rather than an absolute biodiversity measure.
+
+**Income proxy asymmetry.** Delft uses CBS disposable income per resident; Yuexiu uses VIIRS nighttime light radiance as a socioeconomic proxy, as subdistrict income data are not publicly available. These are not equivalent metrics and the equity correlation results are not directly comparable across cities.
+
+**NDVI range asymmetry.** Yuexiu's NDVI range (−0.35 to 0.55) is substantially wider than Delft's (0.31–0.78), driven by water bodies and concrete surfaces scoring very low NDVI. After within-city min-max normalisation, most Yuexiu subdistricts compress toward the lower urgency end, not because vegetation is healthy but because the range is stretched by non-vegetated pixels.
+
+The MCDA weights were assigned a priori rather than derived empirically. This means that our choice to assign weight accessibility at 30%, biodiversity and connectivity at 25%, and equity/spatial justice at 20% is a judgement made before analysis. This however can differ to other researcher or planning priorities, as the weights assigned were based on judgement with nature-based solution being central to our focus analysis. Moreover, the priority tiers map (see Results) displays relative ranking, and does not display absolute urgency to where there needs immediate intervention to nature-based solution. It attempts to inform the least well-performing regions, rather than genuine crisis/urgency.
+
+Finally, no regard was given to peripherical conditions or different transportation methods. Different mobility networks bring different accessibility results — for example, tramlines in relationship to urban green space. If peripherical conditions were taken into account, outer neighbourhoods especially could score differently on analyses such as the buffer coverage and green space per capita.
+
+### Future Work
+
+**Network-based accessibility analysis:** Future work could replace Euclidean distances with a pedestrian network analysis using real walking routes and real access points (those have been assumed). Incorporating barriers such as railways, major roads, and using actual crossing points would provide a more realistic representation of how residents access urban green spaces and improve the planning relevance of accessibility indicators. 
+
+**Sensitivity analysis application on MCDA weighing distribution:** Sensitivity analysis can be applied onto weights within the MCDA analysis to examine how different weighing combinations affect the MCDA result. This would mitigate the inherent subjectivity on the opinion of authors and ensure robustness of multiple what-if scenarios. Thus, ensuring a resilient and informed decision-making process.
+
+**Dataset incoroporated enable direct comparison between two cities**: This directly relates to how data sourced through OSM is lower in Chinese cities (such seen in the GBIF analysis on biodiversity) compared to that of Delft. This will enhance consistency and reliability of cross-city comparisons.
+
+**Incorporation of more urban cooling quantitative analysis**: The blue-green infrastructure analysis can also be improved with more urban cooling or biodiversity effects, which would be particularly relevant given the context of both cities; Delft's canal-rich characteristic and within Yuexiu's central area within the Pearl River Delta. Taking blue and green infrastructure in regard would also give a more accurate result in connectivity, since blue and green often work together. This directly translates to improving urban green space quality.
+
+**Comparison between two cities more comparable in size and population density**: To improve the validity of cross-city comparison, future studies hope to ensure alignment between city sizes and population density. Reducing the current discrepancy in scale would result in more meaningful comparison for future planning recommendations.
+
+**Integration of ecosystem services**: Additional indicators such as urban heat island intensity, flood mitigation potential, carbon storage potential, or air-quality regulation could be incorporated to evaluate a wider range of ecosystem services provided by urban green infrastructure. 
+
+**Validation through user perception**: Planning and urban design are practices that heavily rely on user experience, and for more equal planning practices, citizen participation is a must. Future work coul validate the analytical framework using surveys, interviews, or participatory GIS. Comparing the modelled priority areas together with the residents, using their perception of green space quality would strengthen the framework and help refine indicator selection and weighing, and ultimately, could even provide different assessment criteria, that someone who does not actually live in the area would not think of. 
+
+### Reproducibility
+
+**Reproducibility of the data source**:
+
+-   **Use of a configuration file**: Project-specific parameters, directory paths, coordinate reference systems, and plotting settings are centralised in a configuration file (00_config.R). This enables the workflow to be adapted to new case studies while requiring only minimal changes to the codebase. 
+
+-   **Use of a configuration file**: All spatial datasets were projected to local projected coordinate reference systems (Delft: EPSG:28992; Yuexiu:EPSG:4547) prior to analysis. This ensures consistent distance- and area-based calculations and enables reproducibility across different geographical study areas. 
+
+-   **OSM**: is a crowd-sourced, volunteer-based global map providing vector features such as building, roads and point of interests. It uses ODbL 1.0 licensing/CC-BY-SA 2.0, which means that alteration, transformation is allowed yet there is legal requirement to distribute the new version via the same licensing.
+
+<!-- -->
+
+-   **WorldPop, VIIRS and NDVI**: These datasets all come from sources from CC-BY 4.0 or public licensing, allowing for sharing, adapting or commercial uses as long as credits are given for creator.
+
+-   **Reproducibility of pipeline workflow**: Since several datasets (e.g. OSM and GBIF) are continuously updated, complete numerical reproducibility depends on using the exact same data snapshots. The repository therefore specifies the data sources and versions used throughout the analyses to maximise reproducibility. 
+
+-   **Data versioning**: The entire analysis workflow is designed for full reproducibility and can be executed via running groupE/run_pipeline.R. The project relies on several R libraries, which can be installed or updated.
+
+Moreover, to support open science, our workflow follows the FAIR; Findable, Accessible, Interoperable, and Reusable data principles. Findability and accessibility of our pipeline is demonstrated through our public GitHub repository, with explicit open data sources to ensure reusability of data principles.
+
+### AI statement
+
+Throughout the development of this assignment, we have been assisted by OpenAI's ChatGPT version GPT-5.5, Google's Gemini 3 Flash (Free tier) and Claude Sonnet 4.6. These tools were primarily used to assist with R programming, debugging, gathering information on analytical methods, and for improving clarity and grammar of the written report. All AI-generated suggestions were critically reviewed and adapted. The analytical decisions, methodological choices, data processing, interpretations, and conclusions were made solely by the authors, who take full responsibility for the content being submitted.
 
 ## Conclusion
 
+This study answers to the research question:
+
+::: {.callout-note appearance="simple"}
+**Research Question** How can urban green space quality assessment help inform on nature-based interventions in Delft and Yuexiu District?
+:::
+
+This study developed and applied a reproducible spatial analytical framework for evaluating urban green space quality. Accessibility, ecological quality, spatial justice, and connectivity are the key dimensions on which urban green space quality is assessed. By integrating these dimensions into a Spatial Multi-Criteria Decision Analysis (S-MCDA), the framework provides a decision-support tool which can help identifying priority areas for nature-based interventions in urban contexts. The method can be applied to a variety of urban contexts as long as the spatial unit remains comparable. 
+
+The comparison between Yuexiu and Delft demonstrates that urban green space quality not only depends on the quantity of green spaces, but also on its quality, which is assessed through the four dimensions. Delft generally performs better across the assessed indicators, with higher accessbility, more consistent ecological quality, lower spatial inequality, and a denser network of interconnected green patches. In contrast, Yuexiu is characterised by fewer but substantially larger parks that serve a much population-dense urban context. Although these parks provide important ecological functions, they remain relatively isolated from one another. This results in lower accessibility rates with weaker ecological connectivity. Ultimately, there is a greater spatial inequality in Yuexiu than in Delft. 
+
+The MCDA shows that connectivity is where the greatest opportunity for improvement in both study areas is. Rather than identifying the better-performing city, the framework highlights location-specific priorities and shows that effective nature-based solutions should respond to local spatial conditions; there is no universal "solution". In Delft, small interventions can still strengthen an already well-connected green network. In Yuexiu, benefits are likely to be achieved by creating ecological stepping stones and green corridors that connect the isolated patches (mostly parks), this would ultimately improve accessibility for the surrounding neighbourhoods. for Yuexiu, much larger interventions are necessary.
+
+This study has demonstrated that combining the four dimensions (accessibility, ecological quality, spatial justice, and connectivity) into a reproducible framework provides a more complete assessment of urban green space quality and helps contextualising it. By relying mostly on open-access datasets and a transparant methodology, the workflow can be transferred to other cities and/or districts and be adapted to different planning contexts. It therefore offers planners and decision-makers a tool for prioritising nature-based solutions and supporting more equitable and resilient urban green infrastructure. 
